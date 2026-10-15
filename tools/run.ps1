@@ -24,6 +24,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Probability/period evaluation failed" }
     & .venv/Scripts/python.exe tools/build_dashboard.py
     if ($LASTEXITCODE -ne 0) { throw "Dashboard export failed" }
+    & .venv/Scripts/python.exe tools/build_bot_deployment.py
+    if ($LASTEXITCODE -ne 0) { throw "Webhook deployment export failed" }
 } finally {
     $env:TEMP = $PreviousTemp
     $env:TMP = $PreviousTmp

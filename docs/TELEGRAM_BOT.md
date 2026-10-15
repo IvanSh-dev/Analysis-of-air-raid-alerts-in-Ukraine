@@ -1,46 +1,50 @@
-# Telegram bot: ready code, not registered or running
+# Telegram bot
 
-The owner said no bot exists yet and requested code/instructions. The code and offline command/update handling tests were executed. No real Telegram API calls or messages were sent. A live end-to-end test requires the owner to create a bot and provide its token locally. The static website does not host this long-polling Python process.
+Registered public bot: [@air_alert_atlas_bot](https://t.me/air_alert_atlas_bot). Public dashboard: [Alert Atlas](https://analysis-of-air-raid-alerts-in-ukra.vercel.app/). The owner supplied the username; its public Telegram profile was verified on October 16, 2026.
 
-## Create and run
+The owner supplied live replies for `/forecast Київ 3` and `/forecast Закарпатська 1`. Both exactly matched local renderer output after whitespace normalization, including the Vercel map link. This is an owner-assisted manual check: the assistant had no token or authenticated Telegram session. See [TELEGRAM_MANUAL_CHECK.json](TELEGRAM_MANUAL_CHECK.json). Offline tests also passed. Two replies do not establish callback-button operation or 24/7 uptime. The static Vercel website does not run the Python process.
 
-1. In Telegram open the official [@BotFather](https://t.me/BotFather) and use `/newbot`. Choose its name/username and keep the returned token private. Registration is a human step; no username was reserved or invented by this project.
-2. Reproduce the project using the root README. The generated `site/data.json` is the bot's forecast source.
-3. From the repository root on Windows, run:
+## Run the existing bot
+
+This section describes local polling, which stops when its console closes. For independent cloud operation, use the prepared [Vercel webhook deployment](VERCEL_BOT.md) instead. Do not run both modes at once. The webhook has been tested offline but still needs the owner's Vercel deployment, private environment configuration and one-time registration.
+
+Reproduce the project from the root README, then from the repository root in PowerShell:
 
 ```powershell
 ./tools/run_bot.ps1
 ```
 
-The script prompts for the token using hidden input, sets `TELEGRAM_BOT_TOKEN` for the process, then removes it if entered by the script. It does not write it to a file, command argument, chat or repository. Do not paste the token into this conversation. Alternatively set that environment variable using your secret manager and run:
+Use the token for the already registered bot, retrieved privately from official [@BotFather](https://t.me/BotFather). The script reads it through hidden input, sets `TELEGRAM_BOT_TOKEN` for the process, and removes that variable if it was entered by the script. It does not save the token in a file, command argument or Git. Never paste it into this conversation.
+
+Alternatively inject `TELEGRAM_BOT_TOKEN` with your secret manager and run:
 
 ```powershell
 ./.venv/Scripts/python.exe -m alerts_forecast.telegram_bot
 ```
 
-4. Open your bot in Telegram and send `/start`, then choose a region and a 1/3/7-day period. Stop with Ctrl+C. Keep exactly one polling instance running. An active webhook is detected and reported; this code does not delete it automatically.
+Keep exactly one polling instance running. An existing webhook is reported, not deleted automatically. Stop with Ctrl+C. Restart after updating code or `site/data.json`; both are loaded by the running process. Continuous hosting is a separate decision, and 24/7 operation is not established.
 
-The bot is active only while that process is running. Continuous hosting is a separate deployment decision; the project does not claim 24/7 operation. It serves the frozen October 16 example, not new daily forecasts or live alerts. The Site URL is owner-private, so other bot users cannot automatically view it.
+## Commands and live check
 
-## Commands
+- `/start` or `/regions`: territory buttons, including unsupported territories.
+- `/forecast Київ 1`: Kyiv City, one day.
+- `/forecast Київська 3`: Kyiv oblast, three days.
+- `/forecast Харківська 7`: Kharkiv oblast, seven days.
+- `/help`: event meaning and limitations.
 
-* `/regions`: regional inline buttons, including unsupported territories.
-* `/forecast Київ 1`: Kyiv City, one day.
-* `/forecast Київська 3`: Kyiv oblast, three days.
-* `/forecast Харківська 7`: Kharkiv oblast, seven days.
-* `/help`: event meaning, source date and limitations.
+The reply includes 1/3/7-day buttons. For the frozen example, `/forecast Київ 3` should show about 99.7%, 14.7 records and October 16–18; `/forecast Закарпатська 1` should say unavailable, never 0%. The map link should use the public Vercel address. Check these responses after restarting the updated bot.
 
-Choosing a region defaults to one day; the result includes 1/3/7-day buttons. A probability refers to at least one archive record anywhere in the entire selected period, not a mean daily probability or official danger estimate. Missing territories do not return 0%.
+The percentage means at least one archive record in the entire selected window, not an average daily probability or an official alert/danger estimate. Forecast origin: October 16, 2026 00:00 Europe/Kyiv; data version: October 15. This is not an automatically refreshed service or live alert feed.
 
-## Offline verification
+## Offline verification and implementation
 
 ```powershell
 ./.venv/Scripts/python.exe -m alerts_forecast.telegram_bot --dry-run "/forecast Київ 3"
 ./.venv/Scripts/python.exe -m pytest -q
 ```
 
-Dry-run needs no token/network and sends nothing. Unit tests exercise private-command/callback dispatch with a fake transport, unsupported regions, invalid periods, city/oblast separation and token-safe errors. Actual Telegram delivery remains unverified until the bot is registered.
+Dry-run uses no token/network and sends nothing. Tests cover private command/callback routing, invalid periods, missing regions, Kyiv city/oblast separation, the public map link and token-safe errors. Fake transport tests are not live Telegram delivery.
 
-The implementation uses standard-library HTTPS and the official Bot API (`getMe`, `getWebhookInfo`, `getUpdates`, `answerCallbackQuery`, `sendMessage`). It responds only to incoming private commands/button presses: no groups, contact scraping, unsolicited broadcasts, subscription database or automatic warning service. Only the last update offset is stored under ignored `.tmp/`; incoming chat text/IDs are not logged. HTTPS errors are sanitized so the token-bearing API URL is not printed. Temporary failures back off; running a single instance and keeping its offset avoids ordinary repeated reads, although exactly-once message delivery is not promised after process/storage failures.
+The standard-library HTTPS implementation uses `getMe`, `getWebhookInfo`, `getUpdates`, `answerCallbackQuery` and `sendMessage`. It replies only to incoming private requests, without groups, broadcasts or automatic warnings. Only the last update offset is stored under ignored `.tmp/`; incoming chat text/IDs are not logged. Errors suppress token-bearing URLs. Exactly-once delivery after failures is not promised.
 
-Official references checked October 15, 2026: [BotFather tutorial](https://core.telegram.org/bots/tutorial), [getUpdates](https://core.telegram.org/bots/api#getupdates), [sendMessage](https://core.telegram.org/bots/api#sendmessage). No additional Python dependency is required.
+Official references: [Bot tutorial](https://core.telegram.org/bots/tutorial), [getUpdates](https://core.telegram.org/bots/api#getupdates), [sendMessage](https://core.telegram.org/bots/api#sendmessage). No additional Python dependency is needed.

@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-10-15T22:45:39.526543+00:00",
+  "bot": "https://t.me/air_alert_atlas_bot",
+  "verification_mode": "Owner executed live commands and pasted reply text into the conversation; assistant compared it to local renderer output.",
+  "assistant_direct_telegram_session_used": false,
+  "token_received": false,
+  "checks": [
+    {
+      "command": "/forecast Київ 3",
+      "owner_supplied_reply": "м. Київ · 2026-10-16 — 2026-10-18 Період: 3 дн. · Europe/Kyiv  Хоча б один запис за весь період: 99,7% Базова ймовірність: 96,7% Прогнозована кількість: 14,7 записів Базова кількість: 15,4 записів  Версія даних: 2026-10-15. Зафіксований приклад, не живий сервіс. Це ймовірність запису архіву, не офіційної тривоги чи небезпеки. Керуйтеся офіційними сповіщеннями. Карта: https://analysis-of-air-raid-alerts-in-ukra.vercel.app/",
+      "matches_local_renderer_after_whitespace_normalization": true
+    },
+    {
+      "command": "/forecast Закарпатська 1",
+      "owner_supplied_reply": "Закарпатська · 2026-10-16 — 2026-10-16 Період: 1 дн. · Europe/Kyiv  Прогноз недоступний: Дані архіву застаріли. Невідоме значення не дорівнює нулю тривог.  Версія даних: 2026-10-15. Зафіксований приклад, не живий сервіс. Це ймовірність запису архіву, не офіційної тривоги чи небезпеки. Керуйтеся офіційними сповіщеннями. Карта: https://analysis-of-air-raid-alerts-in-ukra.vercel.app/",
+      "matches_local_renderer_after_whitespace_normalization": true
+    }
+  ],
+  "scope_limit": "Two command replies only. Does not establish callback-button operation, continuous availability or independent direct Telegram observation by the assistant."
+}

@@ -1,27 +1,20 @@
-# Dashboard: current probability/map version
+# Public dashboard
 
-Private hosted URL: https://ivan-alert-atlas-2026.mapledrum8.chatgpt.site
+Current primary URL: https://analysis-of-air-raid-alerts-in-ukra.vercel.app/
+Telegram: https://t.me/air_alert_atlas_bot
 
-Updated successfully on October 16, 2026 Kyiv time. Audience remains owner-private; reviewers do not automatically have access. Local `site/index.html` is also usable without a hosted account. GitHub publication remains separate and has not been performed.
+The owner deployed the static dashboard to Vercel. On October 16, 2026, the public page loaded without authentication. HTML, CSS, JavaScript, JSON and CSV returned HTTP 200 and matched the pre-review local source after line-ending normalization. The browser passed period, map/count-mode, search, missingness, evaluation/calibration and CSV-download checks, with no console errors. See [FINAL_REVIEW.md](FINAL_REVIEW.md) and [FINAL_PUBLIC_CHECK.json](FINAL_PUBLIC_CHECK.json).
 
-Exact Site, version, deployment and source-commit identifiers are in [SITE_V3_DEPLOYMENT.json](SITE_V3_DEPLOYMENT.json). The managed hosting checkout is separate from the Python/GitHub repository. Its tracked `.openai/hosting.json` retains the existing Site identity.
+## Source and deployment
 
-## Implemented
+`site/` contains the complete static website. `tools/build_dashboard.py` regenerates `data.js`, `data.json` and `forecasts.csv` from executed Python results; the bot reads the same JSON. There are no Node dependencies, runtime map tiles or live backend. Preserve the existing Vercel settings; deploy the contents of `site/`. Python model training and Telegram polling run separately.
 
-Ukrainian UI with real administrative geometry, 27 territorial entries and 23 supported forecasts per period; global 1/3/7-day controls; probability/count map modes; region click/search/sorting; explicit unavailable states; per-region historical probability graphs; validation/previously-exposed diagnostic switching; Brier/log-loss/reliability displays; data/source disclosures; Telegram setup status; CSV export. Site and bot read the same generated data. Python's `tools/build_dashboard.py` rebuilds `data.js`, `data.json` and `forecasts.csv`.
+The current review updates the Telegram section and a chart accessibility label locally. These edits require a new Vercel deployment after Git push; the review does not claim to have deployed them. Map/probability data and model settings were unchanged.
 
-## Verification of this version
+The modified local page was served over HTTP and checked in the browser: the Telegram button and corrected diagnostic label are present, with no console errors.
 
-- Full README runner from the original user repository: exit code 0, 32 tests passed.
-- Node syntax check and minimal-DOM logic tests: all 81 region/period states, joins, missing values, sorting and evaluation logic.
-- Independent forecast/window audit and byte comparison: details in V3_VERIFICATION.json and ORIGINAL_CHECKOUT_VERIFICATION.json.
-- Successful native Sites deployment of the packaged, pushed source; all six public files came from the verified original repository.
-- Authenticated hosted desktop UI loaded actual data after explicit owner approval for ChatGPT profile sign-in.
-- Switching 1 to 3 days changed the date range to October 16–18 and Kyiv's percentage to 99.7%, count to 14.7; seven days changed the end to October 22 and count mode updated the map heading/values.
-- Selecting Zakarpattia on the map showed an unavailable forecast, the July 30 last record and an explicit statement that unknowns are not zero.
-- Searching for Ivano-Frankivska returned one territory; selection showed 35.3% and 1.0 records for one day, matching generated data.
-- The evaluation selector switched to the exposed diagnostic period, and the calibration tab changed its title/content for that period/horizon.
-- Visually inspected the map in the actual hosted desktop page; hatched unavailable territories and selected-region detail were visible. Screenshot retained in the separate delivery outputs.
-- Browser console error log was empty.
+The dashboard remains a fixed October 16 research example with 23 supported forecasts per period and four unavailable territories. It has no automatic refresh, danger probabilities or live warning service. Mobile layout was not rechecked in this final review.
 
-This iteration did not recheck mobile layout or the browser's CSV download. The generated CSV itself was checked byte-for-byte. Earlier browser checks in the count-version experiment do not substitute for these current checks. The dashboard has no automatic data updates, live warnings or danger estimates; the forecast origin remains frozen at October 16, 2026.
+## Historical hosting evidence
+
+The earlier owner-private Sites deployment is retained as a historical experiment, not the primary demo. [SITE_V3_DEPLOYMENT.json](SITE_V3_DEPLOYMENT.json) records its exact old URL/commit/deployment and must not be rewritten to pretend Vercel was published by that operation. Earlier access settings do not describe the current public Vercel deployment. The old deployment records and earlier screenshots are provenance; all current navigation uses Vercel and the supplied bot username.

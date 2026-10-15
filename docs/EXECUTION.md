@@ -28,3 +28,19 @@ See [V3_VERIFICATION.json](V3_VERIFICATION.json) and [status/blocks](V3_STATUS.m
 The prepared version was copied into the original user repository with an external backup and intact Git history. `tools/run.ps1` completed from that directory with exit code 0 and 32 tests. Node checked all 81 states; the bot's no-token Kyiv/three-day dry-run succeeded. Thirteen probability outputs and six public website files matched the verified delivery bytes. The `/site` ignore rule was corrected so the UI can be committed. See ORIGINAL_CHECKOUT_VERIFICATION.json.
 
 The private Site was then updated successfully through the official source/package/deploy flow. Authenticated desktop interaction and visual map checks passed, with no console errors, after explicit owner sign-in approval. See DASHBOARD.md and SITE_V3_DEPLOYMENT.json. The original unavailable-access status has been superseded; live Telegram delivery, mobile UI QA and GitHub push remain unperformed.
+
+## Final review: public Vercel and registered bot — October 16, 2026
+
+The owner supplied a Vercel URL and a registered Telegram username. The public Vercel page/assets, browser controls, missingness and CSV download were verified; the bot's public profile exists. Live bot replies were not verified by the review process. The archive main commit still matched the pinned October 15 source.
+
+Rewrote the English README and current status/bot/hosting docs; replaced the bot's old private map link; replaced the obsolete unregistered-bot website text with the real link; corrected the diagnostic chart's accessibility label. Added regression checks for these actual issues. No model search or test-based selection was performed. The full README runner completed with 33 tests, and JavaScript checked 81 region/period states. Local review changes await Git push/Vercel deployment and bot restart; historical deployment evidence was preserved.
+
+## Owner-assisted live Telegram check — October 16, 2026
+
+The owner pasted live responses to `/forecast Київ 3` and `/forecast Закарпатська 1`. Both complete replies matched local renderer output after whitespace normalization, including probabilities/counts/dates, the unavailable-state explanation and the public Vercel link. Recorded the supplied text in TELEGRAM_MANUAL_CHECK.json. Updated current status to distinguish this owner-assisted check from direct assistant Telegram observation, which did not occur. No token was provided, no extra bot messages were sent by the assistant, and no code/model changes were needed. Callback buttons and continuous uptime remain outside this two-command check.
+
+## No-console bot hosting — webhook prepared, not cloud-deployed
+
+The owner reported that closing the polling console stops the bot and asked for a free alternative. Prepared a separate Vercel webhook project with the same canonical renderer and compact forecast data. Removed the bot runtime's unnecessary ML imports. Added secret-header authentication, bounded requests, short outbound timeouts, hidden-input registration with bot-identity and deployed-secret checks, and rollback to polling. No token was provided, no cloud project was created, no real Telegram API call was made, and no webhook was registered by the assistant.
+
+The full README runner completed with 47 tests and unchanged model results; a final registration-probe regression brought the separately executed suite to 48 passing tests. All 81 UI states passed. The deployment imported with site-packages disabled and rendered all 81 region/horizon responses identically. Deployment instructions and free-plan limitations are in VERCEL_BOT.md; WEBHOOK_VERIFICATION.json records the boundary between offline checks and unperformed live deployment.

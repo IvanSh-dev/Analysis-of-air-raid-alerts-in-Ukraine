@@ -92,6 +92,12 @@ class BotTests(unittest.TestCase):
         self.assertEqual(len(keyboard['inline_keyboard'][0]),3)
         with self.assertRaises(ValueError):command('/forecast Київ 2',self.data)
 
+    def test_forecast_links_to_public_dashboard(self):
+        text,_=command('/forecast Київ 3',self.data)
+        self.assertIn('https://analysis-of-air-raid-alerts-in-ukra.vercel.app/',text)
+        self.assertNotIn('chatgpt.site',text)
+        self.assertNotIn('приватний сайт',text)
+
     def test_unknown_region_is_not_defaulted(self):
         with self.assertRaises(ValueError):command('/forecast Atlantis 1',self.data)
 

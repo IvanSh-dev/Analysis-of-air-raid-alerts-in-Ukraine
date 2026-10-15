@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-10-15T23:01:00.452528+00:00",
+  "prepared_mode": "authenticated HTTPS webhook, separate Vercel project",
+  "live_deployed": false,
+  "live_webhook_registered": false,
+  "token_supplied_to_assistant": false,
+  "real_telegram_api_calls": 0,
+  "latest_python_tests_passed": 48,
+  "full_readme_run_exit_code": 0,
+  "full_readme_run_test_count_before_final_setup_probe_test": 47,
+  "final_setup_probe_and_regression_suite_separately_passed": true,
+  "javascript_states_checked": 81,
+  "deployment_import_without_site_packages_passed": true,
+  "deployment_forecasts_match_all_81_original_responses": true,
+  "authentication_failures_send_nothing": true,
+  "setup_checks_bot_identity_and_deployed_secret_before_changing_routing": true,
+  "pending_updates_not_dropped": true,
+  "durable_retry_deduplication": false,
+  "generated_files": 12,
+  "generated_uncompressed_bytes": 32713,
+  "full_run_log_sha256": "d8378832d0048c783e1b3583aefe67e205657dd9a179dca0fd2feaea9a9a1e81",
+  "remaining_owner_steps": [
+    "push generated deployment",
+    "create separate Vercel project with root deploy/telegram",
+    "set private Production token and secret",
+    "deploy and run hidden-input registration",
+    "test commands and buttons after closing console"
+  ]
+}

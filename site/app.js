@@ -65,7 +65,7 @@ function drawChart(r,p){
  const actual=d=>prob?d.actual:d.countActual,estimate=d=>prob?d.probability:d.count,baseline=d=>prob?d.baseline:d.countBaseline;
  const top=prob?1:Math.max(2,...rows.flatMap(d=>[actual(d),estimate(d),baseline(d)]));const max=prob?1:Math.ceil(top/4)*4;
  const x=i=>L+i*(W-L-R)/(rows.length-1),y=v=>T+(1-v/max)*(H-T-B),ns='http://www.w3.org/2000/svg';
- const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('role','img');svg.setAttribute('aria-label',`${r.name}: ${prob?'ймовірності':'кількість'}, період ${horizon} днів, часова валідація`);
+ const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('role','img');svg.setAttribute('aria-label',`${r.name}: ${prob?'ймовірності':'кількість'}, період ${horizon} днів, ${evaluationStage==='diagnostic'?'раніше переглянутий період':'часова валідація'}`);
  const add=(tag,attrs,text)=>{const n=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;svg.append(n);return n;};
  for(let i=0;i<=4;i++){const v=max*i/4;add('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:'#e9ede4','stroke-dasharray':'3 4'});add('text',{x:L-7,y:y(v)+4,'text-anchor':'end',fill:'#78816f','font-size':10},prob?Math.round(v*100)+'%':fmt(v,0));}
  for(const i of [0,7,14,rows.length-1])add('text',{x:x(i),y:H-10,'text-anchor':i===0?'start':i===rows.length-1?'end':'middle',fill:'#78816f','font-size':10},rows[i].date.slice(8)+'.'+rows[i].date.slice(5,7));

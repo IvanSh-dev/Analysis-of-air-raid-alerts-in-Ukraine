@@ -1,0 +1,11 @@
+{
+  "generator": "tools/build_bot_deployment.py",
+  "source_hashes": {
+    "__init__.py": "a4c7d3e490cadafbb3bee5bdca8ebe1ad130f9a26bcf82b80c2b7df98f160028",
+    "telegram_bot.py": "800d2e2ebb908e16569c9023d2e00f71a645bf386250cb5e49a0897b24db074e",
+    "telegram_webhook.py": "d57114e63f519a52caac43a94910db177361e04f87827f2c005f063085620c00"
+  },
+  "forecast_origin": "2026-10-16",
+  "data_version": "2026-10-15",
+  "secrets_included": false
+}

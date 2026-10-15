@@ -47,5 +47,8 @@ ids.get('evaluation-stage').value='diagnostic';ids.get('evaluation-stage').event
 assert(ids.get('history-note').textContent.includes('не незалежний тест'));
 assert(ids.get('history-range').textContent.includes('07.10'));
 assert(ids.get('metric-description').textContent.includes('раніше переглянутий'));
+assert(ids.get('chart').children[0].getAttribute('aria-label').includes('раніше переглянутий'));
+assert(html.includes('https://t.me/air_alert_atlas_bot'));
+assert(!html.includes('Бот ще не зареєстрований'));
 assert(!html.includes('bot123')&&!html.includes('TELEGRAM_BOT_TOKEN'));
 console.log(JSON.stringify({region_horizon_states_checked:checked,map_shapes:27,capital_marker:1,missing_not_zero:true,html_ids_unique:true,check_type:'minimal DOM logic checks; not browser/layout QA'},null,2));

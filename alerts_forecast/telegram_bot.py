@@ -7,9 +7,9 @@ import re
 import time
 from urllib.error import HTTPError,URLError
 from urllib.request import Request,urlopen
-from .pipeline import ROOT
+ROOT=Path(__file__).resolve().parents[1]
 
-URL='https://ivan-alert-atlas-2026.mapledrum8.chatgpt.site'
+URL='https://analysis-of-air-raid-alerts-in-ukra.vercel.app/'
 HELP='''Alert Atlas — архівний дослідницький приклад.
 Дані: 15.10.2026. Початок прогнозу: 16.10.2026, 00:00 Europe/Kyiv.
 
@@ -57,7 +57,7 @@ def render_forecast(region,horizon,data):
               f"Базова кількість: {baseline} записів")
     text=(title+'\n\n'+body+f"\n\nВерсія даних: {data['dataVersion']}. Зафіксований приклад, не живий сервіс."
           '\nЦе ймовірність запису архіву, не офіційної тривоги чи небезпеки. Керуйтеся офіційними сповіщеннями.'
-          '\nКарта: '+URL+' (приватний сайт власника)')
+          '\nКарта: '+URL)
     keyboard={'inline_keyboard':[[{'text':str(h)+' дн.','callback_data':f"f:{region['iso']}:{h}"} for h in [1,3,7]]]}
     return text,keyboard
 
@@ -80,18 +80,20 @@ class ApiFailure(RuntimeError):
     """Sanitized error; never include URL, token, chat or response body."""
 
 class TelegramAPI:
-    def __init__(self,token):
+    def __init__(self,token,timeout=45,wait_on_rate_limit=True):
         if not re.fullmatch(r'[0-9]+:[A-Za-z0-9_-]+',token):
             raise ApiFailure('Invalid token format; value suppressed')
         self._token=token
+        self._timeout=timeout
+        self._wait_on_rate_limit=wait_on_rate_limit
 
     def call(self,method,payload):
         request=Request(f'https://api.telegram.org/bot{self._token}/{method}',
             data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
         try:
-            with urlopen(request,timeout=45) as r:result=json.loads(r.read())
+            with urlopen(request,timeout=self._timeout) as r:result=json.loads(r.read())
         except HTTPError as err:
-            if err.code==429:
+            if err.code==429 and self._wait_on_rate_limit:
                 try:delay=min(60,max(1,int(json.loads(err.read()).get('parameters',{}).get('retry_after',5))))
                 except Exception:delay=5
                 time.sleep(delay)

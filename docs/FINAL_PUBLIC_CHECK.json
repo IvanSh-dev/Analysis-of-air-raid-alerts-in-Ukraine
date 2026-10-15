@@ -1,0 +1,106 @@
+{
+  "checked_at_utc": "2026-10-15T22:31:21.988971+00:00",
+  "website": "https://analysis-of-air-raid-alerts-in-ukra.vercel.app/",
+  "website_assets": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 13675,
+      "sha256": "a9425b3e52cb5348d1083c02ee58158b1324100bfa0ab6983313719d8cd4995c",
+      "matches_local_file_at_check": false,
+      "matches_after_line_ending_normalization": true
+    },
+    {
+      "path": "style.css",
+      "status": 200,
+      "bytes": 16493,
+      "sha256": "5e2db4aac15a2ae32d03cf473250a0d622231d67d114e0532670e28f230deb0e",
+      "matches_local_file_at_check": false,
+      "matches_after_line_ending_normalization": true
+    },
+    {
+      "path": "app.js",
+      "status": 200,
+      "bytes": 13626,
+      "sha256": "b8047e39c03b40b22dc3d451f3258ef1bc440f6736949b58ab01dda9120924ba",
+      "matches_local_file_at_check": true,
+      "matches_after_line_ending_normalization": true
+    },
+    {
+      "path": "data.js",
+      "status": 200,
+      "bytes": 1074296,
+      "sha256": "ca4d062db4f12770019c00e4ea6141219d4b6ce05d40e5ae8579fb166bcf4d19",
+      "matches_local_file_at_check": false,
+      "matches_after_line_ending_normalization": true
+    },
+    {
+      "path": "data.json",
+      "status": 200,
+      "bytes": 1074275,
+      "sha256": "368652013e2138b60135598f0553fcd216f285499d4a85b3d6d43e8d1783c8b5",
+      "matches_local_file_at_check": false,
+      "matches_after_line_ending_normalization": true
+    },
+    {
+      "path": "forecasts.csv",
+      "status": 200,
+      "bytes": 18371,
+      "sha256": "b5e12fc5d7e1ce34326df2f3344ed494da72b10407c0a7f0b68b96dad99d9945",
+      "matches_local_file_at_check": false,
+      "matches_after_line_ending_normalization": true
+    }
+  ],
+  "bot_url": "https://t.me/air_alert_atlas_bot",
+  "bot_profile_verified_in_browser": true,
+  "live_bot_reply_verified": true,
+  "source_main_sha": "22d0443d1d1cdf6a0a413c6d15c3078b5ed26127",
+  "source_commit_time_utc": "2026-10-15T03:50:46Z",
+  "data_matches_current_main": true,
+  "pinned_source_sha": "22d0443d1d1cdf6a0a413c6d15c3078b5ed26127",
+  "checked_local_date": "2026-10-16",
+  "browser_checked": true,
+  "browser_checks": [
+    "1/3/7 days",
+    "probability/count view",
+    "region search and unavailable selection",
+    "diagnostic/calibration switching",
+    "CSV download"
+  ],
+  "browser_console_errors": 0,
+  "downloaded_csv_matches_after_line_ending_normalization": true,
+  "live_website_revision_checked": "9f58779 (local Git HEAD before review edits)",
+  "live_website_contains_review_edits": false,
+  "bot_token_available_to_review_process": false,
+  "python_tests_passed": 33,
+  "javascript_states_checked": 81,
+  "full_readme_run_exit_code": 0,
+  "run_log_sha256": "e0f3a1a158ceed91ede05fae05b467cd0b3762f7a17736a5a3c43b5f5e366189",
+  "note": "Website review edits still await Git push/Vercel deployment. Two owner-supplied live bot replies match expected text, including the public map link. No token or direct Telegram session was used by the assistant.",
+  "final_project_audit": {
+    "audited_git_visible_files": 113,
+    "local_markdown_links_checked": 48,
+    "no_bot_token_shaped_values": true,
+    "private_submission_excluded_from_git": true,
+    "model_inputs_and_results_unchanged_from_head": true,
+    "old_host_occurs_only_in_historical_deployment_evidence": [
+      "docs/SITE_V3_DEPLOYMENT.json"
+    ],
+    "forecast_export_fields_match": true,
+    "geography_and_nested_probabilities_valid": true
+  },
+  "local_review_edits_browser_checked": true,
+  "local_review_checks": [
+    "real bot link present",
+    "obsolete registration text removed",
+    "correct diagnostic chart accessibility label"
+  ],
+  "local_review_browser_console_errors": 0,
+  "live_bot_verification_mode": "owner-assisted manual check; supplied replies match local renderer",
+  "live_bot_commands_verified": [
+    "/forecast \u041a\u0438\u0457\u0432 3",
+    "/forecast \u0417\u0430\u043a\u0430\u0440\u043f\u0430\u0442\u0441\u044c\u043a\u0430 1"
+  ],
+  "live_bot_independently_exercised_by_assistant": false,
+  "live_bot_evidence": "TELEGRAM_MANUAL_CHECK.json"
+}
