@@ -26,7 +26,12 @@ def build():
         src = ROOT / 'alerts_forecast' / name
         shutil.copy2(src, target / 'alerts_forecast' / name)
         hashes[name] = hashlib.sha256(src.read_bytes()).hexdigest()
-    (target / 'api/telegram.py').write_text('"""Generated Vercel entrypoint; canonical logic is in alerts_forecast/."""\nfrom alerts_forecast.telegram_webhook import handler\n', encoding='utf-8')
+    (target / 'api/telegram.py').write_text(
+        '"""Generated Vercel entrypoint; canonical logic is in alerts_forecast/."""\n'
+        'from alerts_forecast.telegram_webhook import handler as _WebhookHandler\n\n\n'
+        'class handler(_WebhookHandler):\n'
+        '    """Declare the handler locally so Vercel static discovery can find it."""\n'
+        '    pass\n', encoding='utf-8')
     (target / 'requirements.txt').write_text('# Python standard library only; no ML runtime dependencies.\n', encoding='utf-8')
     (target / 'pyproject.toml').write_text('[project]\nname = "alert-atlas-webhook"\nversion = "0.1.0"\nrequires-python = ">=3.12"\ndependencies = []\n', encoding='utf-8')
     config = {'$schema': 'https://openapi.vercel.sh/vercel.json', 'framework': None,

@@ -1,0 +1,16 @@
+{
+  "analyzer": "@vercel/python-analysis@0.15.0",
+  "old_import_only_result": null,
+  "fixed_class_result": "handler",
+  "regression_reproduced_and_fixed": true,
+  "checked_at_utc": "2026-10-15T23:26:38.826708+00:00",
+  "reported_error": "[unused_function] api/telegram.py does not match any Serverless Functions",
+  "cause": "The generated file re-exported handler through an import; the static detector requires a recognized top-level declaration.",
+  "fix": "Declare class handler in the entrypoint, inheriting the shared webhook handler; update canonical generator.",
+  "python_tests_passed": 49,
+  "entrypoint_sha256": "ab50cc8b0b2d4ab4a734766c39c6c055f8d44ffa7c73dffc65393b31449d6ef6",
+  "official_detector_source": "https://github.com/vercel/vercel/blob/main/packages/fs-detectors/src/python.ts",
+  "cloud_redeployment_verified": false,
+  "token_or_secret_changed": false,
+  "model_or_forecast_changed": false
+}

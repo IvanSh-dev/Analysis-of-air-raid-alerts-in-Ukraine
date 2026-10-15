@@ -5,7 +5,7 @@
   "live_webhook_registered": false,
   "token_supplied_to_assistant": false,
   "real_telegram_api_calls": 0,
-  "latest_python_tests_passed": 48,
+  "latest_python_tests_passed": 49,
   "full_readme_run_exit_code": 0,
   "full_readme_run_test_count_before_final_setup_probe_test": 47,
   "final_setup_probe_and_regression_suite_separately_passed": true,
@@ -25,5 +25,8 @@
     "set private Production token and secret",
     "deploy and run hidden-input registration",
     "test commands and buttons after closing console"
-  ]
+  ],
+  "vercel_static_discovery_verified": true,
+  "static_discovery_analyzer": "@vercel/python-analysis@0.15.0",
+  "discovery_fix_evidence": "VERCEL_DISCOVERY_FIX.json"
 }

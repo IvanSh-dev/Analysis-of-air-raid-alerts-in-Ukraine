@@ -1,6 +1,7 @@
 """Webhook authentication, routing and dependency-free deployment checks."""
 import json
 import io
+import ast
 import os
 from pathlib import Path
 import subprocess
@@ -152,6 +153,17 @@ class SetupTests(unittest.TestCase):
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_entrypoint_declares_handler_for_static_deployment_discovery(self):
+        build()
+        entrypoint = ROOT / 'deploy/telegram/api/telegram.py'
+        tree = ast.parse(entrypoint.read_text(encoding='utf-8'))
+        declarations = [node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == 'handler']
+        self.assertEqual(len(declarations), 1)
+        result = subprocess.run([sys.executable, '-S', '-c',
+            'from api.telegram import handler; from http.server import BaseHTTPRequestHandler; assert issubclass(handler, BaseHTTPRequestHandler); assert handler.__module__ == "api.telegram"'],
+            cwd=ROOT / 'deploy/telegram', capture_output=True, text=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_package_uses_identical_outputs_for_every_region_and_horizon(self):
         build()
         package = json.loads((ROOT / 'deploy/telegram/site/data.json').read_text(encoding='utf-8'))

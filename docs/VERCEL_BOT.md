@@ -83,6 +83,16 @@ This returns to the original mode, which again requires an open process/awake co
 
 ## Verification and limits
 
+### If Vercel reports `[unused_function]` for `api/telegram.py`
+
+The original generated entrypoint only imported `handler`. Python imported it successfully, but Vercel's static entrypoint detector did not recognize the file, so its `functions` pattern was left unmatched. The corrected generator emits an explicit top-level `class handler(_WebhookHandler)` inheriting the shared implementation.
+
+This was reproduced with official `@vercel/python-analysis@0.15.0`: the import-only source returned no entrypoint, while the corrected source returned `handler`. See [VERCEL_DISCOVERY_FIX.json](VERCEL_DISCOVERY_FIX.json). The fix preserves authentication and rendering; removing the `functions` setting alone would not prove the endpoint was discovered.
+
+Push the corrected `tools/build_bot_deployment.py`, generated `deploy/telegram/api/telegram.py`, tests and docs. Deploy the **newest commit**, not another build of the earlier failed commit. Keep Root Directory `deploy/telegram`, preset Other, and the existing private environment variables. A successful new cloud deployment still needs to be verified at `/api/telegram` before registration.
+
+Official detector references: [Python entrypoint detection](https://github.com/vercel/vercel/blob/main/packages/fs-detectors/src/python.ts), [file-based Python functions](https://vercel.com/docs/functions/runtimes/python/api-directory).
+
 Offline tests exercise secret-header rejection, malformed/oversized bodies, command/callback routing, retryable upstream failures and all 81 forecast responses. A separate Python process with site-packages disabled imports the deployment successfully, proving that pandas/sklearn are not required. These tests use fake Telegram transport and do not send real messages.
 
 The webhook was **prepared and tested locally, not deployed or registered by the assistant**. No token was provided to the assistant. The earlier owner-assisted live replies prove the previous local bot worked; they do not prove this new cloud delivery mode works.
