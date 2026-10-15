@@ -1,0 +1,6 @@
+comparison,a_events,b_events,matched,a_unmatched,b_unmatched,tolerance_seconds,days_equal_observed_counts,days_compared,both_have_no_rows_days,median_matched_start_difference_seconds,matched_start_and_end_within_120s,from,through,matched_30s,matched_300s
+official_volunteer_2024_to_cutoff,1461,1598,941,520,657,120,755,980,202,10.0,903,2024-01-01,2026-09-06,756,1038
+official_volunteer_last_60_days,154,184,63,91,121,120,23,60,6,12.0,58,2026-07-09,2026-09-06,53,77
+official_digital_last_60_days,154,201,151,3,50,120,52,60,10,1.0,150,2026-07-09,2026-09-06,151,152
+volunteer_digital_pretest,1636,1553,954,682,599,120,755,990,201,12.0,909,2024-01-01,2026-09-16,759,1064
+volunteer_digital_since_splice,170,258,53,117,205,120,3,37,0,9.0,37,2026-09-08,2026-10-14,41,65

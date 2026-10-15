@@ -1,0 +1,113 @@
+{
+  "selected": "blend_7",
+  "criterion": "equal-region MAE on rolling validation only",
+  "folds": [
+    [
+      "2026-06-15",
+      "2026-07-12"
+    ],
+    [
+      "2026-07-15",
+      "2026-08-11"
+    ],
+    [
+      "2026-08-15",
+      "2026-09-12"
+    ]
+  ],
+  "candidates": {
+    "baseline_7": {
+      "kind": "mean7"
+    },
+    "median_7": {
+      "kind": "median7"
+    },
+    "median_14": {
+      "kind": "median14"
+    },
+    "ewm_7": {
+      "kind": "ewm7"
+    },
+    "boost_7": {
+      "kind": "boost",
+      "leaves": 7,
+      "blend": 1.0
+    },
+    "boost_15": {
+      "kind": "boost",
+      "leaves": 15,
+      "blend": 1.0
+    },
+    "blend_7": {
+      "kind": "boost",
+      "leaves": 7,
+      "blend": 0.5
+    },
+    "blend_15": {
+      "kind": "boost",
+      "leaves": 15,
+      "blend": 0.5
+    }
+  },
+  "settings_fixed_before_run": true,
+  "old_test_previously_seen": true,
+  "fresh_independent_test_available": false,
+  "selection_scores": [
+    {
+      "model": "baseline_7",
+      "mae": 1.7455608330288637,
+      "rmse": 2.298069158435471,
+      "bias": -0.06474241870661307,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "blend_15",
+      "mae": 1.7029932823728675,
+      "rmse": 2.253335807924276,
+      "bias": -0.26030170988499995,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "blend_7",
+      "mae": 1.6969311074350863,
+      "rmse": 2.2516380418268587,
+      "bias": -0.2699525090499325,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "boost_15",
+      "mae": 1.8097763497371504,
+      "rmse": 2.3835549461269996,
+      "bias": -0.45509655372061425,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "boost_7",
+      "mae": 1.7866478026635115,
+      "rmse": 2.363257140724499,
+      "bias": -0.4749868328668148,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "ewm_7",
+      "mae": 1.70133362141795,
+      "rmse": 2.2367161485903715,
+      "bias": -0.0749725598900597,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "median_14",
+      "mae": 1.7122762148337596,
+      "rmse": 2.336924849913114,
+      "bias": -0.31227621483375956,
+      "stage": "rolling_validation"
+    },
+    {
+      "model": "median_7",
+      "mae": 1.770843989769821,
+      "rmse": 2.4039608488659345,
+      "bias": -0.24245524296675192,
+      "stage": "rolling_validation"
+    }
+  ]
+}

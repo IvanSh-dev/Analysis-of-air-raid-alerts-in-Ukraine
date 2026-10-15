@@ -1,0 +1,8 @@
+{
+  "checked_local_date": "2026-10-16",
+  "source": "https://api.github.com/repos/Vadimkin/ukrainian-air-raid-sirens-dataset/commits/main",
+  "current_main_sha": "22d0443d1d1cdf6a0a413c6d15c3078b5ed26127",
+  "commit_time_utc": "2026-10-15T03:50:46Z",
+  "matches_pinned_data": true,
+  "note": "Direct GitHub API request succeeded. No newer main archive version was available at this recheck; no claim about all possible sources."
+}

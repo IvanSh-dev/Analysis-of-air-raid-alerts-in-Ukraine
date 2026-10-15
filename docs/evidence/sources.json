@@ -1,0 +1,17 @@
+{
+  "github_checked_commit": "22d0443d1d1cdf6a0a413c6d15c3078b5ed26127",
+  "github_commit_time_utc": "2026-10-15T03:50:46Z",
+  "kyiv_history_url": "https://kyiv.digital/open-api/air-alert/history",
+  "kyiv_state_url": "https://kyiv.digital/open-api/air-alert/state",
+  "kyiv_documentation_url": "https://kyiv.digital/open-api/docs/air-alert.html",
+  "history_http_date_utc": "2026-10-15T15:16:13Z",
+  "history_http_status": 200,
+  "token_required_for_history": false,
+  "sha256": {
+    "kyiv_history.json": "0a6ae946c4127596169140e39b9f3b9f9db5b85a28ebf767f4138498671125bb",
+    "kyiv_state.json": "09674a256da3e54d5f75af2d272a41cd3152b131058e5f1513cbbbb9932f3e23",
+    "official_data_en.csv": "b396f87696243069eec0219880e87dcd642b20beb0a7bae0d0e1f61e1ed20ec4",
+    "volunteer_data_en.csv": "57f10937b248f86635c16052c99f17aeaabf4c044f9e259bb626080f54e7abff"
+  },
+  "note": "Checksums refer to locally saved files. Archive MIT license was verified; permission to redistribute API responses publicly has not been established. Nothing was published."
+}

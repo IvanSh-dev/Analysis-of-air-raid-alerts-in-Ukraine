@@ -1,0 +1,30 @@
+{
+  "snapshots": 184,
+  "regions_modelled": 23,
+  "regions_registry": 27,
+  "panel_rows": 3818,
+  "train_rows": 2070,
+  "validation_rows": 989,
+  "test_rows": 644,
+  "train_dates": [
+    "2026-05-01",
+    "2026-07-29"
+  ],
+  "validation_dates": [
+    "2026-08-01",
+    "2026-09-12"
+  ],
+  "test_dates": [
+    "2026-09-16",
+    "2026-10-13"
+  ],
+  "latest_mature_archive_day": "2026-10-13",
+  "snapshot_time_buffer_hours": 6,
+  "archive_queries_changed_in_later_snapshots": 22,
+  "publication_timestamp_assumption": "Git commit time plus 6 hours; actual first public availability is not independently verified",
+  "future_snapshot_features": 0,
+  "unavailable_fit_labels": 0,
+  "test_used_for_selection": false,
+  "target_is_actual_alert_count": false,
+  "unknown_actual_counts_filled_with_zero": false
+}

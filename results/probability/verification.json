@@ -1,0 +1,19 @@
+{
+  "regions": 23,
+  "horizons": [
+    1,
+    3,
+    7
+  ],
+  "validation_origins_per_region_per_horizon": 67,
+  "binary_probability_event": true,
+  "probability_derived_from_count_distribution": false,
+  "feature_origins_fixed_for_entire_window": true,
+  "future_features_used": false,
+  "later_publication_assumption": "Git commit plus 6 hours; actual first-publication time unverified",
+  "unknown_regions_imputed": false,
+  "new_independent_test": false,
+  "latest_exposed_diagnostic_scored": true,
+  "latest_diagnostic_target_date": "2026-10-13",
+  "unknown_diagnostic_windows_left_missing": 184
+}

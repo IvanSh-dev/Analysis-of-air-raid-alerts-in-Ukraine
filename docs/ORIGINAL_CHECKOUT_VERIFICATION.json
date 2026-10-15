@@ -1,0 +1,33 @@
+{
+  "original_checkout": "C:\\Ivan\\python\\Analysis-of-air-raid-alerts-in-Ukraine",
+  "readme_runner_exit_code": 0,
+  "python_tests_passed": 32,
+  "javascript_logic_states_checked": 81,
+  "telegram_dry_run_passed": true,
+  "live_telegram_tested": false,
+  "byte_identical_files": [
+    "results/probability/count_metrics_by_region.csv",
+    "results/probability/count_metrics_macro.csv",
+    "results/probability/diagnostic_by_region.csv",
+    "results/probability/diagnostic_macro.csv",
+    "results/probability/diagnostic_predictions.csv",
+    "results/probability/diagnostic_reliability.csv",
+    "results/probability/forecasts.csv",
+    "results/probability/metrics_by_region.csv",
+    "results/probability/metrics_macro.csv",
+    "results/probability/reliability.csv",
+    "results/probability/selection.json",
+    "results/probability/validation_predictions.csv",
+    "results/probability/verification.json",
+    "site/app.js",
+    "site/data.js",
+    "site/data.json",
+    "site/forecasts.csv",
+    "site/index.html",
+    "site/style.css"
+  ],
+  "run_log_sha256": "b400e1f1c7f744c938cfb1a135f20e7baaeb5dfb691666b837951821df7a490f",
+  "backup_directory": "C:\\Users\\ivans\\Documents\\Codex\\2026-10-15\\stage-2-kse-ai-agentic-school\\outputs\\submission\\backups\\20261016-005036",
+  "git_history_preserved": true,
+  "site_no_longer_ignored_by_git": true
+}

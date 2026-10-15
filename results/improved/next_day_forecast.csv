@@ -1,0 +1,28 @@
+date,region,forecast,baseline,selected_model,status
+2026-10-16,Autonomous Republic of Crimea,,,,absent from source
+2026-10-16,Cherkaska oblast,4.448460947173423,4.857142857142857,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Chernihivska oblast,5.156487596822186,5.0,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Chernivetska oblast,3.019401336647032,3.5714285714285716,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Dnipropetrovska oblast,22.74209797075411,25.142857142857142,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Donetska oblast,3.6869238638841755,3.5714285714285716,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Ivano-Frankivska oblast,1.0380820942028417,1.5714285714285714,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Kharkivska oblast,18.965742315865654,18.714285714285715,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Khersonska oblast,3.817901889296654,3.7142857142857144,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Khmelnytska oblast,3.8134583834778253,4.857142857142857,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Kirovohradska oblast,6.736672047770519,7.0,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Kyiv City,4.707313342730178,5.142857142857143,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Kyivska oblast,14.117878541962185,13.857142857142858,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Luhanska oblast,,,,stale archive; persistent-alert coverage unresolved
+2026-10-16,Lvivska oblast,8.571633522180212,9.714285714285714,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Mykolaivska oblast,14.377764064860528,14.285714285714286,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Odeska oblast,8.44769951206443,7.428571428571429,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Poltavska oblast,6.605294217203571,6.857142857142857,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Rivnenska oblast,5.1911515921208995,5.857142857142857,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Sevastopol City,,,,absent from source
+2026-10-16,Sumska oblast,7.239208377029877,7.428571428571429,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Ternopilska oblast,2.960164513535806,3.7142857142857144,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Vinnytska oblast,8.274785184129055,9.857142857142858,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Volynska oblast,5.694146032847819,6.857142857142857,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Zakarpatska oblast,,,,archive stops in July 2026; recent coverage unavailable
+2026-10-16,Zaporizka oblast,4.8861585843937,4.571428571428571,blend_7,source-defined proxy; actual completeness unverified
+2026-10-16,Zhytomyrska oblast,5.783379868030572,6.142857142857143,blend_7,source-defined proxy; actual completeness unverified

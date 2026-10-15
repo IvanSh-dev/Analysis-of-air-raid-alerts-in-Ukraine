@@ -1,0 +1,18 @@
+{
+  "id": "appgdep_6ad14bad74988191bf96070398391504",
+  "project_id": "appgprj_6ad12e4ca38081919a55e77846bbbbcd",
+  "title": "Alert Atlas \u0412\u00b7 Ukraine",
+  "version_id": "appgprj_6ad12e4ca38081919a55e77846bbbbcd~appgver_ce13dac900fc8191825a175e22ee8904",
+  "type": "publish",
+  "status": "succeeded",
+  "url": "https://ivan-alert-atlas-2026.mapledrum8.chatgpt.site",
+  "has_mcp": false,
+  "screenshot_asset_pointer": null,
+  "provider_deployment_id": "site---6ad12e4ca38081919a55e77846bbbbcd",
+  "failure_message": null,
+  "env_set_revision": 0,
+  "updated_at": "2026-10-15T21:55:11.647811+00:00",
+  "source_commit": "e6e05e24a6f67555388a0cd8d15570aa0c89e052",
+  "audience": "owner-private",
+  "audience_preserved": true
+}

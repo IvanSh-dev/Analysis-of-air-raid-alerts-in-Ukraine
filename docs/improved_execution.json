@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-15",
+  "tests_passed": 15,
+  "full_runner_exit_code": 0,
+  "byte_identical_improved_outputs": 9,
+  "README_local_links_valid": true,
+  "dashboard_registry": 27,
+  "numeric_forecasts": 23,
+  "model": "blend_7",
+  "validation_region_days_per_candidate": 1955,
+  "candidates": 8,
+  "new_independent_test": false,
+  "hosted_status": "succeeded",
+  "hosted_audience": "owner-private",
+  "browser_download_sha256": "5da44fa3af083767bc8b891bc838f210218d4b4215ffc4ab3b15ae9ce788050b",
+  "results_hashes": {
+    "diagnostic_by_region.csv": "1c84ac009cec0822a0310f22d7ab7eef5bf03223da99a9e2c958b68b337ec894",
+    "diagnostic_macro.csv": "e1eb69c1c19c733f39fabc80e2bd44a83b18d2f96aff487910bc67122300b8b3",
+    "diagnostic_predictions.csv": "b1604fd51720bb672979d392f2b7c9b0062781e7639098fff400b430bb10cc4f",
+    "next_day_forecast.csv": "5da44fa3af083767bc8b891bc838f210218d4b4215ffc4ab3b15ae9ce788050b",
+    "selection.json": "1ae8409d385a08c766ba5e0cd96905698d67caecb3f6f8dd8eba4bb2f5fb2bf4",
+    "validation_by_fold.csv": "a4cf5ffe481c373538a7ddbad766ac6ba03df4ad12aae65e72b9562ef05856b7",
+    "validation_by_region.csv": "6487a672d92199589357b0b3918dcbc8013ae5bb1fc80121d741a97f56fc1582",
+    "validation_macro.csv": "ad57c1ed50289d508577c9c8f069d4c2c53c6c247f212f73224dc6f3e4c9f133",
+    "validation_predictions.csv": "24fb8b2debcabe51547dd9eb297de648b990637676ba17f16f8d782ecb26ea26"
+  }
+}

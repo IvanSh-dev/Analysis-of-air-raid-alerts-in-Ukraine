@@ -166,8 +166,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs/Zensical documentation
-/site
+# The project dashboard under site/ is intentionally tracked.
 
 # mypy
 .mypy_cache/
@@ -218,3 +217,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local reproduction artifacts
+.tmp/
+.vintage_cache/
+
+# Private submission materials (conversation export and reflection)
+/submission/

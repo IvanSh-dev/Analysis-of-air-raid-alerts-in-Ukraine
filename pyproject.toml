@@ -1,0 +1,9 @@
+[project]
+name = "ukraine-alert-archive-forecast"
+version = "0.1.0"
+description = "Reproducible next-day forecasting of region-assigned alert archive records"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

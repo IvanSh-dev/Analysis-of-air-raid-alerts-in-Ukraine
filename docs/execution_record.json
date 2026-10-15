@@ -1,0 +1,70 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "pandas": "3.0.6",
+    "scikit_learn": "1.9.1",
+    "matplotlib": "3.11.2"
+  },
+  "tests_passed": 11,
+  "readme_full_run_exit_code": 0,
+  "repeat_output_files_byte_identical": 13,
+  "verified_files": [
+    {
+      "file": "coverage.csv",
+      "sha256": "30923a3d92b426b3a9b52121958fb3cdbc072ba62e8fc6b358728d870a82cec5"
+    },
+    {
+      "file": "largest_errors.csv",
+      "sha256": "243b64612bc83580d583c7a0ace9c9054d67313398e062b630b44c0026afff3f"
+    },
+    {
+      "file": "metrics_by_region.csv",
+      "sha256": "b27f4a95c24cccb420310f6c4ac3efddb99eb9120bc88ab8aaeca98a787651d6"
+    },
+    {
+      "file": "metrics_macro.csv",
+      "sha256": "755fafcd6a669f0ea31567199e490007d5d0d35bd3988d6a7ea5c9eaedd0816e"
+    },
+    {
+      "file": "model_panel.csv.gz",
+      "sha256": "fef7b7361725ae3399894a9f94fc8d8b12872e47c19b875d3197d545dcbfedba"
+    },
+    {
+      "file": "model_selection.json",
+      "sha256": "564bea8c045526950aa11f5657bced42cc5f559b7afcb55e17c385ace2129610"
+    },
+    {
+      "file": "next_day_forecast.csv",
+      "sha256": "c91dbdd3b7e894430b194a01ec884299bcb4b3f20793cb4c7e0054ac47199d22"
+    },
+    {
+      "file": "regional_activity.png",
+      "sha256": "98f617a6f424a847f35c8d1229e90f82c9341409e0a369b850c87759f0726c65"
+    },
+    {
+      "file": "test_mae_by_region.png",
+      "sha256": "57a14c964db48bb116b21db447f9e5a1a91c718a0a3abd8a58c22e3b754d4d6a"
+    },
+    {
+      "file": "test_predictions.csv",
+      "sha256": "c43240e73fd692b6c9b8ff71577838d39a5a6d3bef73a74fe59913668591f7cf"
+    },
+    {
+      "file": "test_predictions.png",
+      "sha256": "b5190ba98cda1983b196e9be5360479f833bb429fcaafdd242a4da5015011e4b"
+    },
+    {
+      "file": "validation_predictions.csv",
+      "sha256": "dbaca9c619ae10e0bc085eb98b615e7e839cd03f3e2ac2c9f9815d1a4b524031"
+    },
+    {
+      "file": "verification.json",
+      "sha256": "f7a7f70f9c4c52ac0454324a34d3b752aed851f4066f8e5b70765d8bc9a65c33"
+    }
+  ],
+  "unavailable_forecasts_are_missing": true,
+  "geography_registry_rows": 27,
+  "modelled_territories": 23,
+  "executed_on": "2026-10-15"
+}
