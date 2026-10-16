@@ -170,8 +170,9 @@ class DeploymentTests(unittest.TestCase):
         original = json.loads((ROOT / 'site/data.json').read_text(encoding='utf-8'))
         for region in original['regions']:
             for horizon in [1, 3, 7]:
-                request = f'/forecast {region["iso"]} {horizon}'
-                self.assertEqual(command(request, package), command(request, original))
+                for name in ['/forecast','/threshold']:
+                    request = f'{name} {region["iso"]} {horizon}'
+                    self.assertEqual(command(request, package), command(request, original))
 
     def test_deployment_imports_without_any_installed_packages(self):
         build()

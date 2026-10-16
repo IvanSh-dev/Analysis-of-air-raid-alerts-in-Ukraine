@@ -52,3 +52,8 @@ Official references: [Bot tutorial](https://core.telegram.org/bots/tutorial), [g
 ## Current cloud delivery
 
 The bot now uses the separate Vercel webhook at https://air-alert-atlas-bot-lilac.vercel.app/api/telegram. The owner confirmed working delivery after registration and the requested no-console test workflow. This is owner-assisted verification; individual new cloud replies and buttons were not independently captured. The assistant verified endpoint readiness without a token. Do not start local polling unless the webhook has first been disabled; see [the hosting guide](VERCEL_BOT.md).
+
+
+## Two-event revision — October 16, 2026
+
+The local revision adds `/threshold Київ 3` and event buttons alongside the existing `/forecast` event. The website has an explicit target selector; it updates probabilities, map, history, evaluation, AUC and the corresponding CSV. ≥3 includes exactly three on one local day, not the sum across days. The selected new-target method is smoothed frequency, chosen on validation. All counts still refer to all archive records. See [the experiment](THRESHOLD_PROBABILITY.md) and [integration verification](DUAL_TARGET_VERIFICATION.json). Both Vercel projects need the new commit; existing webhook registration remains valid. New-target live delivery is not yet verified.

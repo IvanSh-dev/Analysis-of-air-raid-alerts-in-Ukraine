@@ -5,6 +5,7 @@ import json
 import math
 import shutil
 import sys
+import copy
 import pandas as pd
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -81,11 +82,48 @@ def main():
         'event':'at least one archive-recorded start in selected window','map':map_data()}
     assert len(regions)==27
     assert all(sum(r['periods'][str(h)]['probability'] is not None for r in regions)==23 for h in [1,3,7])
+    # Add an independent event target without replacing any original forecast field.
+    targets={}
+    for target,directory,checks in [('any',result,ROOT/'results/probability_checks'),
+                                     ('ge3',ROOT/'results/probability_ge3',ROOT/'results/probability_ge3')]:
+        decision=json.loads((directory/'selection.json').read_text(encoding='utf-8'))
+        targets[target]={'selected':decision['selected'],
+            'metrics':pd.read_csv(checks/'metrics_macro.csv').to_dict('records'),
+            'diagnosticMetrics':pd.read_csv(checks/'diagnostic_macro.csv').to_dict('records'),
+            'reliability':pd.read_csv(directory/'reliability.csv').to_dict('records'),
+            'diagnosticReliability':pd.read_csv(directory/'diagnostic_reliability.csv').to_dict('records')}
+        # Undefined AUC is JSON null, never an invented 0.5.
+        for key in ['metrics','diagnosticMetrics']:
+            for row in targets[target][key]:
+                if pd.isna(row['roc_auc']):row['roc_auc']=None
+        if target=='any':continue
+        target_forecast=pd.read_csv(directory/'forecasts.csv')
+        target_val=pd.read_csv(directory/'validation_predictions.csv')
+        target_diag=pd.read_csv(directory/'diagnostic_predictions.csv').dropna(subset=['event'])
+        target_metrics=pd.read_csv(directory/'metrics_by_region.csv')
+        for entry in regions:
+            entry['ge3Periods']=copy.deepcopy(entry['periods'])
+            for h in [1,3,7]:
+                item=entry['ge3Periods'][str(h)]
+                row=target_forecast[target_forecast.region.eq(entry['id'])&target_forecast.horizon.eq(h)].iloc[0]
+                if pd.isna(row.probability):continue
+                item['probability']=float(row.probability);item['baselineProbability']=float(row.prior)
+                score=target_metrics[target_metrics.region.eq(entry['id'])&target_metrics.horizon.eq(h)&target_metrics.model.eq(decision['selected'])].iloc[0]
+                item['brier']=float(score.brier)
+                for key,source in [('history',target_val[target_val.fold.eq('2026-08-15')]),('diagnosticHistory',target_diag)]:
+                    lookup=source[source.region.eq(entry['id'])&source.horizon.eq(h)].set_index('date')
+                    for point in item[key]:
+                        current=lookup.loc[point['date']]
+                        point.update(actual=int(current.event),probability=float(current[decision['selected']]),baseline=float(current.prior))
+    payload['targets']=targets
+    payload['targetModels']={key:value['selected'] for key,value in targets.items()}
+    payload['schemaVersion']=4
     raw=json.dumps(payload,ensure_ascii=False,allow_nan=False)
     site=ROOT/'site';site.mkdir(exist_ok=True)
     (site/'data.js').write_text('window.ALERT_DATA = '+raw+';\n',encoding='utf-8')
     (site/'data.json').write_text(raw+'\n',encoding='utf-8')
     shutil.copy2(result/'forecasts.csv',site/'forecasts.csv')
+    shutil.copy2(ROOT/'results/probability_ge3/forecasts.csv',site/'forecasts_ge3.csv')
     print('Dashboard: checked 27 shapes, 23 forecasts per horizon, periods 1/3/7, binary-event probabilities.')
 
 if __name__=='__main__':main()

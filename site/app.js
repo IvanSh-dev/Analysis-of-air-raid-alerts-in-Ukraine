@@ -3,20 +3,34 @@ const data=window.ALERT_DATA,$=id=>document.getElementById(id);
 const fmt=(v,d=2)=>new Intl.NumberFormat('uk-UA',{maximumFractionDigits:d,minimumFractionDigits:d}).format(v);
 const pct=p=>p===null?'—':p>.999?'>99,9%':p<.001?'<0,1%':fmt(p*100,1)+'%';
 const date=d=>d.slice(8)+'.'+d.slice(5,7)+'.'+d.slice(0,4);
-let selected='Kyiv City',horizon=1,view='probability',metricMode='error',evaluationStage='validation';
-const current=r=>r.periods[String(horizon)];
+let selected='Kyiv City',target='any',horizon=1,view='probability',metricMode='error',evaluationStage='validation';
+// Bot links retain the event, region and period; ignore unsupported URL values.
+const params=new URLSearchParams(window.location?.search||'');
+if(['any','ge3'].includes(params.get('target')))target=params.get('target');
+if([1,3,7].includes(Number(params.get('days'))))horizon=Number(params.get('days'));
+const linkedRegion=data.regions.find(r=>r.iso===params.get('region'));
+if(linkedRegion)selected=linkedRegion.id;
+const info=()=>data.targets[target];
+const current=r=>(target==='any'?r.periods:r.ge3Periods)[String(horizon)];
+const targetText=()=>target==='any'?'хоча б одного запису':'хоча б однієї місцевої доби з ≥3 записами';
+const modelNames={logistic:'Логістична регресія',prior:'Згладжена частота',train_frequency:'Частота на навчанні',train_majority:'Більшість на навчанні',always_one:'Завжди 1',always_zero:'Завжди 0'};
 const scalar=p=>view==='probability'?p.probability:p.count;
 function pick(id){selected=id;$('region-select').value=id;renderList();renderDetail();renderMap();}
 function update(){
- const end=data.regions[0].periods[String(horizon)].end;
+ const end=current(data.regions[0]).end;
+ $('target-explainer').textContent=target==='any'?'Подія: хоча б один запис у всьому вибраному періоді.':'Подія: хоча б одна місцева доба з 3 або більше записами. Рівно 3 враховано; це не сума записів за весь період.';
+ $('forecast-label').textContent=target==='any'?'Ймовірність хоча б одного запису':'Ймовірність хоча б однієї доби з ≥3 записами';
+ $('selected-method').textContent='Обрано на валідації: '+modelNames[info().selected]+'.';
+ $('method-probability').textContent=target==='any'?'Для події ≥1 обрано логістичну регресію за середнім Brier трьох горизонтів. На одноденній валідації згладжена частота трохи краща. На відкритій 7-денній діагностиці виграє «завжди 1».':'Для події ≥3 за добу на валідації виграла згладжена частота, тому саме її показано як прогноз. Поріг фіксований; на довших горизонтах подія досі насичена у багатьох регіонах.';
+ $('download-forecast').setAttribute('href',target==='any'?'forecasts.csv':'forecasts_ge3.csv');
  $('period-range').textContent=date(data.forecastDate)+(end===data.forecastDate?'':' — '+date(end));
  $('detail-period').textContent=horizon===1?'1 календарний день':horizon===3?'3 календарні дні':'7 календарних днів';
  document.querySelectorAll('[data-horizon]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.horizon)===horizon)));
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));
- const score=data.metrics.find(r=>r.horizon===horizon&&r.model===data.selected),base=data.metrics.find(r=>r.horizon===horizon&&r.model==='prior');
+ const score=info().metrics.find(r=>r.horizon===horizon&&r.model===info().selected),base=info().metrics.find(r=>r.horizon===horizon&&r.model==='prior');
  $('cv-mae').textContent=fmt(score.brier,4);const change=(score.brier/base.brier-1)*100;
- $('gain').textContent=(change>0?'+':'')+fmt(change,1)+'%';$('gain').className=change<=0?'green':'worse';
- $('gain-caption').textContent=change>0?'на цьому горизонті базовий трохи кращий':'нижча похибка за базову частоту';
+ $('gain').textContent=(change>0?'+':'')+fmt(change,1)+'%';$('gain').className=change<0?'green':change>0?'worse':'';
+ $('gain-caption').textContent=change>0?'на цьому горизонті базовий трохи кращий':change<0?'нижча похибка за базову частоту':'обрано згладжену частоту як прогноз';
  $('observed-rate').textContent=pct(score.observed_rate);
  renderList();renderDetail();renderMap();renderMetrics();
 }
@@ -33,10 +47,10 @@ function renderDetail(){
  $('region-name').textContent=r.name;$('availability').textContent=available?'Оцінка архівної події':'Немає даних';$('availability').className='badge'+(available?'':' missing');
  $('available-detail').hidden=!available;$('unavailable-detail').hidden=available;$('last-record').textContent=r.last?r.last.replace('+00:00',''):'немає';
  if(!available){$('unavailable-reason').textContent=r.reason;return;}
- $('plain-result').textContent=`За оцінкою моделі, для регіону «${r.name}» шанс появи хоча б одного запису про початок тривоги в архіві за цей період становить ${pct(p.probability)}.`;
+ $('plain-result').textContent=`За оцінкою моделі, для регіону «${r.name}» шанс ${targetText()} в архіві за цей період становить ${pct(p.probability)}.`;
  $('forecast').textContent=pct(p.probability);$('baseline').textContent=pct(p.baselineProbability);
  $('count-forecast').textContent=fmt(p.count,1)+' записів';$('count-baseline').textContent=fmt(p.countBaseline,1)+' записів';
- $('region-mae').textContent=fmt(p.brier,4);$('chart-heading').textContent=view==='probability'?'Ймовірність і спостереження':'Кількість записів за вибране вікно';
+ $('region-mae').textContent=fmt(p.brier,4);$('chart-heading').textContent=view==='probability'?'Ймовірність і спостереження':'Кількість усіх записів за вибране вікно';
  const recent=evaluationStage==='diagnostic',history=recent?p.diagnosticHistory:p.history;
  $('actual-label').textContent=view==='probability'?'Подія: 0% або 100%':'Фактичні записи';
  $('history-range').textContent='Початки: '+history[0].date.slice(8)+'.'+history[0].date.slice(5,7)+' — '+history.at(-1).date.slice(8)+'.'+history.at(-1).date.slice(5,7);
@@ -46,7 +60,7 @@ function renderDetail(){
  drawChart(r,{...p,history});
 }
 function renderMap(){
- const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',data.map.viewBox);svg.setAttribute('role','group');svg.setAttribute('aria-label','Карта прогнозів України');
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',data.map.viewBox);svg.setAttribute('role','group');svg.setAttribute('aria-label','Карта прогнозів України: '+targetText());
  const defs=document.createElementNS(ns,'defs');defs.innerHTML='<pattern id="missing-hatch" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#e9eae3"/><path d="M0 7L7 0" stroke="#b9bfb1" stroke-width="1"/></pattern>';svg.append(defs);
  const max=view==='probability'?1:Math.max(...data.regions.map(r=>current(r).count??0));
  function attach(node,r){const p=current(r),value=scalar(p),t=value===null?null:Math.max(0,Math.min(1,value/max));
@@ -56,9 +70,9 @@ function renderMap(){
  for(const shape of data.map.shapes){const r=data.regions.find(x=>x.iso===shape.iso);const path=document.createElementNS(ns,'path');path.setAttribute('d',shape.path);path.setAttribute('fill-rule','evenodd');attach(path,r);svg.append(path);}
  const capital=data.map.shapes.find(s=>s.iso==='UA-30'),circle=document.createElementNS(ns,'circle');circle.setAttribute('cx',capital.center[0]);circle.setAttribute('cy',capital.center[1]);circle.setAttribute('r',8);attach(circle,data.regions.find(r=>r.iso==='UA-30'));circle.setAttribute('aria-label','м. Київ: '+pct(current(data.regions.find(r=>r.iso==='UA-30')).probability));svg.append(circle);
  $('map').replaceChildren(svg);const r=data.regions.find(x=>x.id===selected),p=current(r);
- $('map-heading').textContent=view==='probability'?'Ймовірність на карті':'Кількість записів на карті';$('map-region').textContent=r.name;
+ $('map-heading').textContent=view==='probability'?'Ймовірність на карті':'Кількість усіх записів на карті';$('map-region').textContent=r.name;
  $('map-value').textContent=view==='probability'?pct(p.probability):p.count===null?'—':fmt(p.count,1);
- $('map-detail').textContent=p.probability===null?r.reason:view==='probability'?`Хоча б один запис за ${horizon} ${horizon===1?'день':horizon===3?'дні':'днів'}. Це не оцінка небезпеки.`:`Прогнозована кількість записів за весь період ${date(data.forecastDate)}–${date(p.end)}.`;
+ $('map-detail').textContent=p.probability===null?r.reason:view==='probability'?`${target==='any'?'Хоча б один запис':'Хоча б одна доба з ≥3 записами'} за ${horizon} ${horizon===1?'день':horizon===3?'дні':'днів'}. Це не оцінка небезпеки.`:`Прогнозована кількість записів за весь період ${date(data.forecastDate)}–${date(p.end)}.`;
  $('scale-min').textContent=view==='probability'?'0%':'0';$('scale-max').textContent=view==='probability'?'100%':fmt(max,1);
 }
 function drawChart(r,p){
@@ -76,13 +90,15 @@ function drawChart(r,p){
 }
 function renderMetrics(){
  const error=metricMode==='error';$('tab-val').setAttribute('aria-selected',String(error));$('tab-diag').setAttribute('aria-selected',String(!error));$('model-bars').replaceChildren();
- const source=evaluationStage==='diagnostic'?data.diagnosticMetrics:data.metrics;
+ const source=evaluationStage==='diagnostic'?info().diagnosticMetrics:info().metrics;
+ const chosen=source.find(r=>r.horizon===horizon&&r.model===info().selected);
+ $('auc-info').textContent=`Макро ROC AUC обраного методу: ${chosen.roc_auc===null?'не визначена':fmt(chosen.roc_auc,3)}; регіонів зі змінним результатом: ${chosen.auc_regions}/23. Для сталих результатів AUC не визначена. Це діагностика, а не критерій вибору. Частота події: ${pct(chosen.observed_rate)}.`;
  if(error){const scores=source.filter(r=>r.horizon===horizon).sort((a,b)=>a.brier-b.brier),max=Math.max(...scores.map(s=>s.brier))*1.15;
  $('metric-description').textContent=evaluationStage==='diagnostic'?`Раніше переглянутий період: результати відомі до 13.10.2026 включно. Для ${horizon} днів — ${29-horizon} початків на регіон. Це не новий незалежний тест і не підбір моделі.`:`Період ${horizon} днів. Три часові відрізки, 67 початків прогнозу на регіон. Глобальний вибір зроблено за середнім Brier горизонтів 1/3/7.`;
- for(const s of scores){const row=document.createElement('div');row.className='metric-bar-row';const name=document.createElement('span');name.textContent=s.model==='prior'?'Історична частота':'Логістична регресія';const track=document.createElement('div');track.className='bar-track';const fill=document.createElement('div');fill.className='bar-fill'+(s.model===data.selected?' selected':'');fill.style.width=(s.brier/max*100)+'%';track.append(fill);const value=document.createElement('strong');value.textContent=fmt(s.brier,4);row.append(name,track,value);$('model-bars').append(row);const loss=document.createElement('p');loss.className='loss-note';loss.textContent=`Log loss: ${fmt(s.log_loss,4)} · середній прогноз: ${pct(s.mean_probability)}`;$('model-bars').append(loss);}}
+ for(const s of scores){const row=document.createElement('div');row.className='metric-bar-row';const name=document.createElement('span');name.textContent=modelNames[s.model];const track=document.createElement('div');track.className='bar-track';const fill=document.createElement('div');fill.className='bar-fill'+(s.model===info().selected?' selected':'');fill.style.width=(s.brier/max*100)+'%';track.append(fill);const value=document.createElement('strong');value.textContent=fmt(s.brier,4);row.append(name,track,value);$('model-bars').append(row);const loss=document.createElement('p');loss.className='loss-note';loss.textContent=`Log loss: ${fmt(s.log_loss,4)} · ROC AUC: ${s.roc_auc===null?'—':fmt(s.roc_auc,3)} (${s.auc_regions}/23 регіонів)`;$('model-bars').append(loss);}}
  else{$('metric-description').textContent=`Калібрування: ${evaluationStage==='diagnostic'?'раніше переглянутий період':'часова валідація'}, ${horizon} днів. Порівнюємо середню ймовірність зі спостереженою частотою. Малі групи нестійкі.`;
  const table=document.createElement('table');table.className='calibration-table';const head=document.createElement('tr');for(const name of ['Прогноз','Факт','Вікон']){const th=document.createElement('th');th.textContent=name;head.append(th);}table.append(head);
- const reliability=evaluationStage==='diagnostic'?data.diagnosticReliability:data.reliability;
+ const reliability=evaluationStage==='diagnostic'?info().diagnosticReliability:info().reliability;
  for(const bin of reliability.filter(r=>r.horizon===horizon)){const tr=document.createElement('tr');for(const value of [pct(bin.mean_probability),pct(bin.observed_frequency),String(bin.n)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}table.append(tr);}$('model-bars').append(table);}
 }
 // A native selector keeps the main task usable without exploring the map/list.
@@ -91,6 +107,8 @@ $('region-select').value=selected;
 $('region-select').addEventListener('change',()=>pick($('region-select').value));
 document.querySelectorAll('[data-horizon]').forEach(b=>b.addEventListener('click',()=>{horizon=Number(b.dataset.horizon);update();}));
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;update();}));
+$('target-select').value=target;
+$('target-select').addEventListener('change',()=>{target=$('target-select').value;update();});
 $('search').addEventListener('input',renderList);$('sort').addEventListener('change',renderList);
 $('evaluation-stage').addEventListener('change',()=>{evaluationStage=$('evaluation-stage').value;renderDetail();renderMetrics();});
 $('tab-val').addEventListener('click',()=>{metricMode='error';renderMetrics();});$('tab-diag').addEventListener('click',()=>{metricMode='calibration';renderMetrics();});update();

@@ -1,0 +1,14 @@
+     model      mae     rmse      bias              stage
+   blend_7 1.696931 2.251638 -0.269953 rolling_validation
+     ewm_7 1.701334 2.236716 -0.074973 rolling_validation
+  blend_15 1.702993 2.253336 -0.260302 rolling_validation
+ median_14 1.712276 2.336925 -0.312276 rolling_validation
+baseline_7 1.745561 2.298069 -0.064742 rolling_validation
+  median_7 1.770844 2.403961 -0.242455 rolling_validation
+   boost_7 1.786648 2.363257 -0.474987 rolling_validation
+  boost_15 1.809776 2.383555 -0.455097 rolling_validation
+Selected: blend_7 
+Exposed-period diagnostic:
+      model      mae     rmse      bias
+baseline_7 2.048580 2.623364 -0.381322
+   blend_7 2.001508 2.594962 -0.610467

@@ -7,6 +7,7 @@ import re
 import time
 from urllib.error import HTTPError,URLError
 from urllib.request import Request,urlopen
+from urllib.parse import urlencode
 ROOT=Path(__file__).resolve().parents[1]
 
 URL='https://analysis-of-air-raid-alerts-in-ukra.vercel.app/'
@@ -17,9 +18,11 @@ HELP='''Alert Atlas — архівний дослідницький прикла
 /forecast Київ 1 — прогноз на добу
 /forecast Львівська 3 — прогноз на три дні
 /forecast Харківська 7 — прогноз на сім днів
+/threshold Київ 3 — хоча б одна доба з ≥3 записами за три дні
 /help — пояснення
 
 Відсоток означає ймовірність хоча б одного запису за весь період. Це не ймовірність офіційної тривоги чи небезпеки. Керуйтеся офіційними сповіщеннями.
+Кнопки «≥1 запис» та «≥3 за добу» перемикають подію. ≥3 включає рівно 3 записи за одну місцеву добу, а не суму за весь період.
 Бот не отримує живі тривоги й не надсилає автоматичних попереджень.'''
 
 def percent(value):
@@ -42,8 +45,10 @@ def region_keyboard(data):
     buttons=[{'text':r['name'],'callback_data':'f:'+r['iso']+':1'} for r in data['regions']]
     return {'inline_keyboard':[buttons[i:i+2] for i in range(0,len(buttons),2)]}
 
-def render_forecast(region,horizon,data):
-    p=region['periods'][str(horizon)]
+def render_forecast(region,horizon,data,target='any'):
+    if target not in {'any','ge3'}:raise ValueError('Невідома подія прогнозу.')
+    if target=='ge3' and 'ge3Periods' not in region:raise ValueError('Ця версія даних ще не містить прогнозу ≥3.')
+    p=region['periods' if target=='any' else 'ge3Periods'][str(horizon)]
     start=data['forecastDate'];end=p['end']
     title=f"{region['name']} · {start} — {end}\nПеріод: {horizon} дн. · Europe/Kyiv"
     if p['probability'] is None:
@@ -51,14 +56,19 @@ def render_forecast(region,horizon,data):
     else:
         count=f'{p["count"]:.1f}'.replace('.',',')
         baseline=f'{p["countBaseline"]:.1f}'.replace('.',',')
-        body=(f"Хоча б один запис за весь період: {percent(p['probability'])}\n"
+        label='Хоча б один запис за весь період' if target=='any' else 'Хоча б одна доба з ≥3 записами за весь період'
+        body=(f"{label}: {percent(p['probability'])}\n"
               f"Базова ймовірність: {percent(p['baselineProbability'])}\n"
               f"Прогнозована кількість: {count} записів\n"
               f"Базова кількість: {baseline} записів")
-    text=(title+'\n\n'+body+f"\n\nВерсія даних: {data['dataVersion']}. Зафіксований приклад, не живий сервіс."
+    method='згладжена частота' if data.get('targetModels',{}).get('ge3','prior')=='prior' else 'логістична регресія'
+    definition='Подія: ≥1 запис за період.' if target=='any' else f'Подія: ≥3 за одну місцеву добу хоча б раз у періоді; рівно 3 враховано. Кількість нижче — усі записи, не число таких діб. Обраний метод: {method} (за валідацією).'
+    text=(title+'\n'+definition+'\n\n'+body+f"\n\nВерсія даних: {data['dataVersion']}. Зафіксований приклад, не живий сервіс."
           '\nЦе ймовірність запису архіву, не офіційної тривоги чи небезпеки. Керуйтеся офіційними сповіщеннями.'
-          '\nКарта: '+URL)
-    keyboard={'inline_keyboard':[[{'text':str(h)+' дн.','callback_data':f"f:{region['iso']}:{h}"} for h in [1,3,7]]]}
+          '\nКарта: '+URL+'?'+urlencode({'target':target,'region':region['iso'],'days':horizon})+'#explore')
+    keyboard={'inline_keyboard':[[{'text':str(h)+' дн.','callback_data':f"f:{region['iso']}:{h}:{target}"} for h in [1,3,7]],
+        [{'text':'≥1 запис','callback_data':f"f:{region['iso']}:{horizon}:any"},
+         {'text':'≥3 за добу','callback_data':f"f:{region['iso']}:{horizon}:ge3"}]]}
     return text,keyboard
 
 def command(text,data):
@@ -67,13 +77,17 @@ def command(text,data):
     arg=pieces[1] if len(pieces)>1 else ''
     if cmd in {'/start','/help'}:return HELP,region_keyboard(data)
     if cmd=='/regions':return 'Оберіть територію. За замовчуванням — 1 день.',region_keyboard(data)
-    if cmd=='/forecast':
+    if cmd in {'/forecast','/threshold'}:
+        target='ge3' if cmd=='/threshold' else 'any'
+        target_fields=arg.rsplit(maxsplit=1)
+        if len(target_fields)==2 and target_fields[-1] in {'any','ge3'}:
+            arg,target=arg.rsplit(maxsplit=1)
         fields=arg.rsplit(maxsplit=1)
         horizon=1
         if len(fields)>1 and fields[-1].isdigit():
             horizon=int(fields[-1]);arg=fields[0]
         if horizon not in (1,3,7):raise ValueError('Доступні періоди: 1, 3 або 7 днів.')
-        return render_forecast(find_region(data,arg),horizon,data)
+        return render_forecast(find_region(data,arg),horizon,data,target)
     return 'Невідома команда. Скористайтеся /regions або /help.',None
 
 class ApiFailure(RuntimeError):
@@ -109,8 +123,9 @@ def handle_update(update,data,api):
         if not message or message.get('chat',{}).get('type')!='private':return
         api.call('answerCallbackQuery',{'callback_query_id':query['id']})
         parts=query.get('data','').split(':')
-        if len(parts)!=3 or parts[0]!='f' or parts[2] not in {'1','3','7'}:return
-        try:region=find_region(data,parts[1]);text,keyboard=render_forecast(region,int(parts[2]),data)
+        if len(parts) not in {3,4} or parts[0]!='f' or parts[2] not in {'1','3','7'}:return
+        target=parts[3] if len(parts)==4 else 'any'
+        try:region=find_region(data,parts[1]);text,keyboard=render_forecast(region,int(parts[2]),data,target)
         except ValueError:return
     else:
         message=update.get('message',{})

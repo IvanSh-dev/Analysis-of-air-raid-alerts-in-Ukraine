@@ -1,0 +1,70 @@
+{
+  "checked_at_utc": "2026-10-16T09:32:25.494721+00:00",
+  "status": "Local integration verified; no commit, push or new deployment performed",
+  "targets": [
+    "any archive record",
+    "at least one local day with >=3 archive records"
+  ],
+  "selected_models": {
+    "any": "logistic",
+    "ge3": "prior"
+  },
+  "threshold_comparison": ">=",
+  "exactly_three_included": true,
+  "python_tests_passed": 59,
+  "javascript_target_region_horizon_states": 162,
+  "forecast_values_checked": 138,
+  "unavailable_values_checked": 24,
+  "old_model_sources_and_original_data_results_unchanged_in_git": true,
+  "original_dashboard_fields_preserved": true,
+  "metric_columns_reproduced_to_six_decimals": 35,
+  "site_json_javascript_csv_and_history_checked": true,
+  "bot_package_matches_all_162_responses": true,
+  "dependency_free_serverless_import_test_passed": true,
+  "pip_check": "No broken requirements found",
+  "browser": {
+    "desktop_viewport": [
+      1280,
+      900
+    ],
+    "mobile_viewport": [
+      390,
+      844
+    ],
+    "mobile_document_width": 375,
+    "no_mobile_horizontal_overflow": true,
+    "checks": [
+      "both event choices",
+      "periods",
+      "unsupported region remains unavailable",
+      "map selection synchronizes region",
+      "count view labels all records",
+      "six baseline/model bars",
+      "diagnostic ROC AUC counts and calibration",
+      "target-specific CSV links",
+      "bot deep link retains ge3, UA-30, 3 days"
+    ],
+    "console_errors_observed": 0,
+    "screenshot": "dual-target-preview.jpg",
+    "screenshot_is_local_preview": true
+  },
+  "live_new_target_telegram_test_performed": false,
+  "token_or_secret_read": false,
+  "remaining_steps": [
+    "commit and push",
+    "wait for both Vercel projects to deploy the new commit",
+    "owner tests /threshold and event/period buttons on the cloud bot"
+  ],
+  "recorded_execution_evidence": [
+    "evidence/dual_target/pipeline.txt",
+    "evidence/dual_target/improve.txt",
+    "evidence/dual_target/periods.txt",
+    "evidence/dual_target/threshold_probability.txt",
+    "evidence/dual_target/tests.txt",
+    "evidence/dual_target/reproduction_check.json"
+  ],
+  "git_visible_files_checked": 158,
+  "local_markdown_links_checked": 69,
+  "credential_shaped_values_in_delivery": 0,
+  "private_materials_excluded": true
+}

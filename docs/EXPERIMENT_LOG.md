@@ -115,3 +115,26 @@ The owner reported `[unused_function]` for `api/telegram.py` during deployment. 
 The owner confirmed the Vercel bot works after the no-console registration workflow. Endpoint readiness was independently verified in the preceding conversation turn; no assistant Telegram session or credential sharing occurred. This supersedes earlier pending-deployment status entries. The website was then simplified for first-time visitors: a clear introduction, one region/period selector, a large result and plain-language interpretation, followed by the map. History, baselines and technical evaluation expand on demand. Larger typography, native controls and mobile spacing replace the dense dashboard layout. Numerical forecasts and model settings are unchanged. See READABILITY_REVIEW.json for checks and deployment status.
 
 The final diff review caught Windows default-decoding corruption in four documentation appends. Restored their original UTF-8 history from HEAD and retained only the intended new entries; explicit UTF-8 reads/writes preserve Ukrainian command examples.
+
+
+## 2026-10-16 — inclusive daily threshold, Stage A only
+
+The owner requested staged diagnosis before any new model. Clarified and confirmed >=3, correcting inconsistent “more than 3” wording. Executed `python -m alerts_forecast.diagnose_threshold`; the recorded output and full regional/fold tables are in `results/probability_ge3_diagnostics/`. Confirmed the old event saturation and the seven-day constant-one win, but challenged the inference that Brier cannot distinguish models. The new event has lower macro prevalence yet remains highly saturated in many regions; no threshold, horizon, region coverage or model was changed. Recomputed shipped count-MAE arithmetic. The reported Linux discrepancy remains unresolved without comparable Linux versions/outputs; no cross-platform explanation or fresh fit is claimed. Existing source/data/result hashes were preserved, and model fits were blocked. Steps B–F are pending owner review. See THRESHOLD_DIAGNOSTIC_A.md.
+
+## 2026-10-16 — reported boosting reproducibility difference; investigation closed
+
+The owner reported an independent rerun with blend_7 validation MAE 1.695790,
+versus the committed 1.696931. According to that report, differences were confined
+to boosting models; non-boosting results and probability metrics matched exactly.
+The cause is not established, and the conclusion that the blend improves on the
+baseline by about 0.05 MAE is unchanged. At the owner's request, no further
+environment setup, floating-point investigation or model rerun was performed.
+Added the qualified first-person note to README. Committed CSV files, modelling
+logic, data and settings were not changed.
+
+
+## 2026-10-16 — >=3 forecast authorized and integrated
+
+After stage A, the owner explicitly authorized a separate >=3 probability forecast and target switches on the website and bot. Implemented the fixed inclusive event, eligible-history threshold frequencies, the unchanged logistic configuration, smoothed prior and rolling validation. Added training-only regional frequency/majority references, fixed constants and regional ROC AUC for both targets. Validation selected the smoothed prior; did not replace it with logistic based on exposed diagnostics. Original pipeline reruns into temporary folders matched existing metrics to six decimals, without changing committed originals. The first new missing-history test failed because its integer fixture could not store NaN under pandas; explicitly converted the fixture to float and reran successfully. Integration review also corrected a zero-improvement caption and explanations that previously described only the original event. Added target-aware CSVs, legacy-compatible bot callbacks and both targets in the generated dependency-free deployment. See THRESHOLD_PROBABILITY.md and DUAL_TARGET_VERIFICATION.json for actual commands, scores and deployment limits.
+
+The final delivery check also verified bot deep links preserve target/region/horizon, kept execution evidence Git-visible as .txt instead of ignored .log files, and added a guard rejecting output paths inside the original experiment directories. The completed suite passed 59 tests and the minimal-DOM checks covered 162 states.

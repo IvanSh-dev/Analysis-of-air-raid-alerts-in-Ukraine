@@ -100,3 +100,8 @@ The owner deployed the webhook and completed hidden-input registration, then rep
 The function waits for its Telegram calls before returning. It uses short timeouts and returns failure on transient errors so Telegram can retry. There is no durable deduplication store, so retries after partial failures can produce duplicate replies. Cold starts and free-tier limits can delay/unavailable replies; no 24/7 guarantee is claimed. Forecasts remain frozen and are not official alerts.
 
 Telegram references: [webhooks](https://core.telegram.org/bots/webhooks), [setWebhook and secret_token](https://core.telegram.org/bots/api#setwebhook).
+
+
+## Two-event revision — October 16, 2026
+
+The local revision adds `/threshold Київ 3` and event buttons alongside the existing `/forecast` event. The website has an explicit target selector; it updates probabilities, map, history, evaluation, AUC and the corresponding CSV. ≥3 includes exactly three on one local day, not the sum across days. The selected new-target method is smoothed frequency, chosen on validation. All counts still refer to all archive records. See [the experiment](THRESHOLD_PROBABILITY.md) and [integration verification](DUAL_TARGET_VERIFICATION.json). Both Vercel projects need the new commit; existing webhook registration remains valid. New-target live delivery is not yet verified.

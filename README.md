@@ -1,8 +1,9 @@
 # Alert Atlas — regional alert archive forecasting
 
 A reproducible Python project for KSE AI Agentic School Stage 2. It forecasts the number
-of archive-recorded alert starts and the probability of at least one such record for
-each supported Ukrainian region over **1, 3, or 7 calendar days**.
+of archive-recorded alert starts and two probabilities for each supported Ukrainian
+region over **1, 3, or 7 calendar days**: at least one record, or at least one local
+day with **≥3 records** (including exactly three).
 
 **[Public dashboard](https://analysis-of-air-raid-alerts-in-ukra.vercel.app/)** ·
 **[Telegram bot: @air_alert_atlas_bot](https://t.me/air_alert_atlas_bot)** · [Source
@@ -12,9 +13,9 @@ repository](https://github.com/IvanSh-dev/Analysis-of-air-raid-alerts-in-Ukraine
 not probabilities of official alerts, danger, or safety. Follow official air-raid
 notifications.
 
-![Local redesigned dashboard: guided regional forecast](docs/readable-home-2x.jpg)
+![Local two-target dashboard: inclusive >=3 daily-record forecast](docs/dual-target-preview.jpg)
 
-[Open the full-resolution screenshot](docs/readable-home-2x.jpg).
+[Open the full-resolution screenshot](docs/dual-target-preview.jpg).
 
 ## What the demo shows
 
@@ -30,7 +31,8 @@ daily probability. A new forecast origin requires fresh eligible snapshots and a
 evaluation/prediction run.
 
 The public Vercel page and bot profile were checked on October 16, 2026. The owner also
-supplied two live bot replies (Kyiv and unavailable Zakarpattia); both match the local
+supplied two live bot replies (Kyiv and unavailable Zakarpattia); both matched the
+then-current local
 renderer, including the public map link. This was an owner-assisted manual check, not a
 direct Telegram session operated by the assistant. See [final
 review](docs/FINAL_REVIEW.md) for the exact checks and remaining deployment steps.
@@ -62,7 +64,9 @@ python -m venv .venv
 ./.venv/Scripts/python.exe -m alerts_forecast.pipeline
 ./.venv/Scripts/python.exe -m alerts_forecast.improve
 ./.venv/Scripts/python.exe -m alerts_forecast.periods
+./.venv/Scripts/python.exe -m alerts_forecast.threshold_probability
 ./.venv/Scripts/python.exe tools/build_dashboard.py
+./.venv/Scripts/python.exe tools/build_bot_deployment.py
 ```
 
 On Linux/macOS use `python3` and `.venv/bin/python` for the explicit commands; those
@@ -87,7 +91,8 @@ node --check site/app.js
 node tests/check_dashboard.mjs
 ```
 
-The latter checks all 81 region/period combinations with a minimal DOM fixture. It is a
+The latter checks all 162 target/region/period combinations with a minimal DOM fixture.
+It is a
 logic test, not a replacement for browser inspection.
 
 ## Data and counting rule
@@ -147,7 +152,22 @@ lost to it. A bounded comparison of eight candidates over three forward folds se
 MAE improved from **1.745561 to 1.696931 records per region-day** (about 2.8%). This is
 a count result, not probability accuracy. [Count experiment](docs/IMPROVEMENT.md).
 
-Probabilities are evaluated separately. Each horizon has pooled logistic regression
+I note that gradient-boosting results can differ by about 0.002 MAE across
+environments, as reported in an independent rerun; the cause is not established.
+This does not change my conclusion that the blend beats the baseline by about
+0.05 MAE.
+
+I found that the “at least one record” event becomes saturated over longer horizons: on
+the exposed seven-day diagnostic, constant one scores Brier 0.011858, versus 0.015916
+for logistic regression. I therefore added a separate target: at least one local day
+with **three or more (≥3)** archive records within the window. Its rolling-validation
+event rates are 61.389%, 73.718% and 81.376% for 1/3/7 days. I selected smoothed
+frequency for this target on validation alone (mean Brier 0.072015 versus 0.073879 for
+logistic regression); many regions still have saturated outcomes, especially over seven
+days.
+
+For the original ≥1 event, probabilities are evaluated separately. Each horizon has
+pooled logistic regression
 (`C=0.1`), compared with a smoothed historical-frequency baseline. A fixed cumulative
 maximum enforces `P(1 day) <= P(3 days) <= P(7 days)` for both candidates before
 scoring. No independence between days is assumed; percentages are not derived from point
@@ -164,13 +184,14 @@ All regions use common chronological boundaries:
 There are **67 origins per region per horizon**. Selection minimizes average macro Brier
 across horizons, with equal region/horizon weights. Lower Brier and log loss are better.
 
-| Horizon | Logistic Brier | Baseline Brier | Logistic log loss |
-| --- | ---: | ---: | ---: |
-| 1 day | 0.075362 | **0.074905** | 0.243597 |
-| 3 days | **0.057914** | 0.057955 | 0.173208 |
-| 7 days | **0.047803** | 0.051990 | 0.146575 |
+| Horizon | Logistic Brier | Baseline Brier | Logistic log loss | ROC AUC | AUC regions |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 day | 0.075362 | 0.074905 | 0.243597 | 0.548910 | 12/23 |
+| 3 days | 0.057914 | 0.057955 | 0.173208 | 0.583583 | 6/23 |
+| 7 days | 0.047803 | 0.051990 | 0.146575 | 0.448725 | 5/23 |
 
-Logistic wins averaged across horizons; the one-day baseline is slightly better. Brier
+For the original event, logistic wins averaged across horizons; the one-day baseline is
+slightly better. Brier
 is mean squared probability error against a 0/1 outcome. Reliability bins compare
 predicted/observed frequencies, without proving perfect calibration. Overlapping 3/7-day
 windows are dependent; no statistical-significance claim is made.
@@ -180,16 +201,38 @@ now an additional diagnostic, not a fresh independent test, and does not select 
 improved models. Only mature windows ending by October 13 are scored: 28/26/22 origins
 per region for 1/3/7 days. The 184 unfinished outcomes remain missing.
 
-| Horizon | Diagnostic logistic Brier | Diagnostic baseline Brier |
-| --- | ---: | ---: |
-| 1 day | **0.043745** | 0.046268 |
-| 3 days | **0.028379** | 0.029572 |
-| 7 days | 0.015916 | **0.012562** |
+| Horizon | Diagnostic logistic Brier | Smoothed baseline Brier | Constant-one Brier |
+| --- | ---: | ---: | ---: |
+| 1 day | 0.043745 | 0.046268 | 0.090062 |
+| 3 days | 0.028379 | 0.029572 | 0.048495 |
+| 7 days | 0.015916 | 0.012562 | 0.011858 |
 
-The seven-day baseline is better there; the validation-selected family is unchanged.
+The smoothed baseline beats logistic at seven days; constant one scores lower still.
+The validation-selected family is unchanged.
 Regional scores/predictions are exported so aggregates cannot conceal regional
 performance. Independent confirmation requires a predeclared future period and fresh
 data. [Detailed probability method](docs/PROBABILITY_AND_PERIODS.md).
+
+## Additional probability checks
+
+Both targets report fixed zero/one constants, a regional majority-class baseline
+(ties choose one), and the regional training frequency. The latter two use only
+labels available before each fit; they are frozen during that evaluation fold.
+These references and ROC AUC do not change the original selection or model settings.
+Regional ROC AUC is undefined when every evaluation outcome is the same; macro AUC
+averages only defined regional values and reports the number of included regions.
+Brier and log loss continue to average all 23 supported regions equally. For log loss,
+probabilities are clipped to [1e-8, 1-1e-8]; Brier uses the unmodified probabilities.
+See [the separate threshold experiment](docs/THRESHOLD_PROBABILITY.md) and
+[the integration checks](docs/DUAL_TARGET_VERIFICATION.json).
+
+The separate ≥3 event selected smoothed frequency on validation alone:
+
+| Horizon | Selected Brier | Logistic Brier | Selected ROC AUC | AUC regions |
+| --- | ---: | ---: | ---: | ---: |
+| 1 day | 0.095775 | 0.094253 | 0.573365 | 19/23 |
+| 3 days | 0.062022 | 0.062905 | 0.565858 | 13/23 |
+| 7 days | 0.058248 | 0.064478 | 0.600628 | 8/23 |
 
 ## Telegram bot
 
@@ -209,6 +252,7 @@ Open **[@air_alert_atlas_bot](https://t.me/air_alert_atlas_bot)** and try `/star
 /forecast Київ 1
 /forecast Київська 3
 /forecast Харківська 7
+/threshold Київ 3
 ```
 
 It distinguishes Kyiv City from Kyiv oblast, includes period buttons, preserves
@@ -235,7 +279,9 @@ Offline check, without token/network:
 | `data/` | Versioned compact input, provenance, hashes, geometry, licenses |
 | `results/` | Original count results and three analysis figures |
 | `results/improved/` | Count-model comparison and diagnostics |
-| `results/probability/` | Predictions, regional/macro scores, reliability, selection |
+| `results/probability/` | Original-event predictions, scores and selection, unchanged |
+| `results/probability_ge3/` | Separate inclusive ≥3 daily-event experiment and selection |
+| `results/probability_checks/` | Additional baselines and regional ROC AUC for the original event |
 | `site/` | Static dashboard, generated JSON/JS, 81 forecast rows: 69 numeric, 12 unavailable |
 | `deploy/telegram/` | Generated, stdlib-only Vercel webhook project with compact identical forecasts |
 | `tests/` | Temporal, missingness, selection, bot, UI checks |

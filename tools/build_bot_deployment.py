@@ -15,11 +15,15 @@ def build():
     source = json.loads((ROOT / 'site/data.json').read_text(encoding='utf-8'))
     # Keep the identical forecast fields; map geometry/history are unnecessary here.
     data = {key: source[key] for key in ['forecastDate', 'dataVersion']}
+    data['targetModels']=source['targetModels']
     data['regions'] = [{key: region[key] for key in ['id', 'iso', 'name', 'reason', 'periods']}
                        for region in source['regions']]
     for region in data['regions']:
         region['periods'] = {h: {k: p[k] for k in ['end', 'probability', 'baselineProbability', 'count', 'countBaseline']}
                              for h, p in region['periods'].items()}
+        original=next(r for r in source['regions'] if r['id']==region['id'])
+        region['ge3Periods']={h:{k:p[k] for k in ['end','probability','baselineProbability','count','countBaseline']}
+                              for h,p in original['ge3Periods'].items()}
     (target / 'site/data.json').write_text(json.dumps(data, ensure_ascii=False, allow_nan=False) + '\n', encoding='utf-8')
     hashes = {}
     for name in ['__init__.py', 'telegram_bot.py', 'telegram_webhook.py']:

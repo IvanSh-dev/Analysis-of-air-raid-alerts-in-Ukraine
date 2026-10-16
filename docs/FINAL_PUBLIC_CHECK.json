@@ -78,8 +78,8 @@
   "run_log_sha256": "e0f3a1a158ceed91ede05fae05b467cd0b3762f7a17736a5a3c43b5f5e366189",
   "note": "Website review edits still await Git push/Vercel deployment. Two owner-supplied live bot replies match expected text, including the public map link. No token or direct Telegram session was used by the assistant.",
   "final_project_audit": {
-    "audited_git_visible_files": 118,
-    "local_markdown_links_checked": 53,
+    "audited_git_visible_files": 158,
+    "local_markdown_links_checked": 69,
     "no_bot_token_shaped_values": true,
     "private_submission_excluded_from_git": true,
     "model_inputs_and_results_unchanged_from_head": true,

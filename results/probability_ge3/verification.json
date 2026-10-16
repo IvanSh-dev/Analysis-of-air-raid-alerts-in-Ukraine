@@ -1,0 +1,8 @@
+{
+  "new_target": ">=3 on at least one local day; not window-total >=3",
+  "existing_probability_files_changed": false,
+  "new_sources": false,
+  "unknown_diagnostic_windows": 184,
+  "threshold_fixed_before_fit": true,
+  "selection_uses_validation_only": true
+}

@@ -22,6 +22,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Improved-model evaluation failed" }
     & .venv/Scripts/python.exe -m alerts_forecast.periods
     if ($LASTEXITCODE -ne 0) { throw "Probability/period evaluation failed" }
+    & .venv/Scripts/python.exe -m alerts_forecast.threshold_probability
+    if ($LASTEXITCODE -ne 0) { throw "Threshold probability evaluation failed" }
     & .venv/Scripts/python.exe tools/build_dashboard.py
     if ($LASTEXITCODE -ne 0) { throw "Dashboard export failed" }
     & .venv/Scripts/python.exe tools/build_bot_deployment.py

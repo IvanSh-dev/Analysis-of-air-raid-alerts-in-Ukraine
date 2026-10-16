@@ -21,9 +21,11 @@ const viewButtons=[...html.matchAll(/data-view="([^"]+)"/g)].map(m=>{const b=new
 const document={getElementById:id=>{assert(ids.has(id),'Missing HTML id '+id);return ids.get(id);},
  createElement:tag=>new Element(tag),createElementNS:(_,tag)=>new Element(tag),
  querySelectorAll:q=>q==='[data-horizon]'?horizonButtons:q==='[data-view]'?viewButtons:[]};
-vm.runInNewContext(fs.readFileSync(path.join(root,'site/app.js'),'utf8'),{document,window:{ALERT_DATA:data},Intl,console});
+vm.runInNewContext(fs.readFileSync(path.join(root,'site/app.js'),'utf8'),{document,window:{ALERT_DATA:data},Intl,console,URLSearchParams});
 const click=e=>e.events.click({preventDefault(){}});
 let checked=0;
+for(const target of ['any','ge3']){
+ ids.get('target-select').value=target;ids.get('target-select').events.change();
 for(const h of [1,3,7]){
  click(horizonButtons.find(b=>b.dataset.horizon===String(h)));
  assert(ids.get('period-range').textContent.includes(h===1?'16.10.2026':h===3?'18.10.2026':'22.10.2026'));
@@ -32,12 +34,14 @@ for(const h of [1,3,7]){
  assert.equal(map.children.filter(n=>n.tagName==='circle').length,1);
  for(const region of data.regions){
   const button=ids.get('regions').children.find(b=>b.dataset.region===region.id);click(button);
-  const p=region.periods[String(h)];assert.equal(ids.get('region-name').textContent,region.name);assert.equal(ids.get('region-select').value,region.id);
+  const p=(target==='any'?region.periods:region.ge3Periods)[String(h)];assert.equal(ids.get('region-name').textContent,region.name);assert.equal(ids.get('region-select').value,region.id);
   if(p.probability===null){assert.equal(ids.get('available-detail').hidden,true);assert.equal(ids.get('unavailable-detail').hidden,false);assert.equal(ids.get('map-value').textContent,'—');}
-  else{assert.equal(ids.get('available-detail').hidden,false);assert.match(ids.get('forecast').textContent,/%$/);assert.equal(ids.get('chart').children[0].tagName,'svg');assert(!ids.get('forecast').textContent.includes('NaN'));}
+  else{assert.equal(ids.get('available-detail').hidden,false);assert.match(ids.get('forecast').textContent,/%$/);assert(ids.get('plain-result').textContent.includes(target==='ge3'?'≥3':'одного запису'));assert(ids.get('selected-method').textContent.includes(target==='ge3'?'Згладжена':'Логістична'));assert.equal(ids.get('chart').children[0].tagName,'svg');assert(!ids.get('forecast').textContent.includes('NaN'));}
   checked++;
  }
 }
+}
+ids.get('target-select').value='any';ids.get('target-select').events.change();
 ids.get('region-select').value='Kyiv City';ids.get('region-select').events.change();assert.equal(ids.get('region-name').textContent,'м. Київ');assert(ids.get('plain-result').textContent.includes(ids.get('forecast').textContent));
 click(viewButtons.find(b=>b.dataset.view==='count'));assert(ids.get('map-heading').textContent.includes('Кількість'));
 ids.get('search').value='Закар';ids.get('search').events.input();assert.equal(ids.get('regions').children.length,1);click(ids.get('regions').children[0]);assert.equal(ids.get('unavailable-detail').hidden,false);

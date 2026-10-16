@@ -1,0 +1,81 @@
+ORIGINAL EVENT references: validation
+             stage  horizon           model    brier  log_loss  observed_rate  mean_probability  roc_auc  auc_regions  regions
+rolling_validation        1      always_one 0.208955  3.849097       0.791045          1.000000 0.500000           12       23
+rolling_validation        1     always_zero 0.791045 14.571583       0.791045          0.000000 0.500000           12       23
+rolling_validation        1        logistic 0.075362  0.243597       0.791045          0.780290 0.548910           12       23
+rolling_validation        1           prior 0.074905  0.253956       0.791045          0.758079 0.464413           12       23
+rolling_validation        1 train_frequency 0.076216  0.246004       0.791045          0.784255 0.463237           12       23
+rolling_validation        1  train_majority 0.105775  1.948456       0.791045          0.811162 0.495525           12       23
+rolling_validation        3      always_one 0.116158  2.139716       0.883842          1.000000 0.500000            6       23
+rolling_validation        3     always_zero 0.883842 16.280965       0.883842          0.000000 0.500000            6       23
+rolling_validation        3        logistic 0.057914  0.173208       0.883842          0.887612 0.583583            6       23
+rolling_validation        3           prior 0.057955  0.192063       0.883842          0.849651 0.590162            6       23
+rolling_validation        3 train_frequency 0.059889  0.178158       0.883842          0.899320 0.402569            6       23
+rolling_validation        3  train_majority 0.099935  1.840873       0.883842          0.926671 0.485561            6       23
+rolling_validation        7      always_one 0.062946  1.159511       0.937054          1.000000 0.500000            5       23
+rolling_validation        7     always_zero 0.937054 17.261170       0.937054          0.000000 0.500000            5       23
+rolling_validation        7        logistic 0.047803  0.146575       0.937054          0.949766 0.448725            5       23
+rolling_validation        7           prior 0.051990  0.176134       0.937054          0.898850 0.532091            5       23
+rolling_validation        7 train_frequency 0.046498  0.199263       0.937054          0.957422 0.385237            5       23
+rolling_validation        7  train_majority 0.062946  1.159511       0.937054          1.000000 0.500000            5       23
+ORIGINAL EVENT references: diagnostic
+             stage  horizon           model    brier  log_loss  observed_rate  mean_probability  roc_auc  auc_regions  regions
+exposed_diagnostic        1      always_one 0.090062  1.659005       0.909938          1.000000 0.500000            8       23
+exposed_diagnostic        1     always_zero 0.909938 16.761675       0.909938          0.000000 0.500000            8       23
+exposed_diagnostic        1        logistic 0.043745  0.146958       0.909938          0.874281 0.559534            8       23
+exposed_diagnostic        1           prior 0.046268  0.169120       0.909938          0.853986 0.467455            8       23
+exposed_diagnostic        1 train_frequency 0.084025  0.277549       0.909938          0.785166 0.500000            8       23
+exposed_diagnostic        1  train_majority 0.136646  2.517112       0.909938          0.782609 0.500000            8       23
+exposed_diagnostic        3      always_one 0.048495  0.893311       0.951505          1.000000 0.500000            3       23
+exposed_diagnostic        3     always_zero 0.951505 17.527370       0.951505          0.000000 0.500000            3       23
+exposed_diagnostic        3        logistic 0.028379  0.088454       0.951505          0.931062 0.496032            3       23
+exposed_diagnostic        3           prior 0.029572  0.115745       0.951505          0.920250 0.511603            3       23
+exposed_diagnostic        3 train_frequency 0.045756  0.141377       0.951505          0.881570 0.500000            3       23
+exposed_diagnostic        3  train_majority 0.081940  1.509387       0.951505          0.869565 0.500000            3       23
+exposed_diagnostic        7      always_one 0.011858  0.218427       0.988142          1.000000 0.500000            2       23
+exposed_diagnostic        7     always_zero 0.988142 18.202254       0.988142          0.000000 0.500000            2       23
+exposed_diagnostic        7        logistic 0.015916  0.054404       0.988142          0.960853 0.421053            2       23
+exposed_diagnostic        7           prior 0.012562  0.072040       0.988142          0.959239 0.653509            2       23
+exposed_diagnostic        7 train_frequency 0.024281  0.083741       0.988142          0.934783 0.500000            2       23
+exposed_diagnostic        7  train_majority 0.011858  0.218427       0.988142          1.000000 0.500000            2       23
+>=3 VALIDATION:
+             stage  horizon           model    brier  log_loss  observed_rate  mean_probability  roc_auc  auc_regions  regions
+rolling_validation        1      always_one 0.386113  7.112463       0.613887          1.000000 0.500000           19       23
+rolling_validation        1     always_zero 0.613887 11.308218       0.613887          0.000000 0.500000           19       23
+rolling_validation        1        logistic 0.094253  0.304600       0.613887          0.603369 0.550930           19       23
+rolling_validation        1           prior 0.095775  0.308874       0.613887          0.584080 0.573365           19       23
+rolling_validation        1 train_frequency 0.100254  0.339518       0.613887          0.583790 0.545069           19       23
+rolling_validation        1  train_majority 0.143413  2.641772       0.613887          0.565217 0.500000           19       23
+rolling_validation        3      always_one 0.262816  4.841256       0.737184          1.000000 0.500000           13       23
+rolling_validation        3     always_zero 0.737184 13.579425       0.737184          0.000000 0.500000           13       23
+rolling_validation        3        logistic 0.062905  0.213620       0.737184          0.734867 0.531967           13       23
+rolling_validation        3           prior 0.062022  0.215885       0.737184          0.700409 0.565858           13       23
+rolling_validation        3 train_frequency 0.064727  0.226893       0.737184          0.730667 0.479803           13       23
+rolling_validation        3  train_majority 0.077223  1.422493       0.737184          0.739130 0.500000           13       23
+rolling_validation        7      always_one 0.186243  3.430717       0.813757          1.000000 0.500000            8       23
+rolling_validation        7     always_zero 0.813757 14.989963       0.813757          0.000000 0.500000            8       23
+rolling_validation        7        logistic 0.064478  0.198092       0.813757          0.827106 0.551351            8       23
+rolling_validation        7           prior 0.058248  0.203995       0.813757          0.764781 0.600628            8       23
+rolling_validation        7 train_frequency 0.061745  0.190213       0.813757          0.830422 0.448378            8       23
+rolling_validation        7  train_majority 0.075276  1.386631       0.813757          0.811162 0.486727            8       23
+Selected >=3 model: prior
+>=3 EXPOSED DIAGNOSTIC:
+             stage  horizon           model    brier  log_loss  observed_rate  mean_probability  roc_auc  auc_regions  regions
+exposed_diagnostic        1      always_one 0.223602  4.118910       0.776398          1.000000 0.500000           13       23
+exposed_diagnostic        1     always_zero 0.776398 14.301771       0.776398          0.000000 0.500000           13       23
+exposed_diagnostic        1        logistic 0.084317  0.277103       0.776398          0.737644 0.578612           13       23
+exposed_diagnostic        1           prior 0.087978  0.295046       0.776398          0.711077 0.488521           13       23
+exposed_diagnostic        1 train_frequency 0.155805  0.476163       0.776398          0.605179 0.500000           13       23
+exposed_diagnostic        1  train_majority 0.251553  4.633774       0.776398          0.608696 0.500000           13       23
+exposed_diagnostic        3      always_one 0.132107  2.433501       0.867893          1.000000 0.500000            5       23
+exposed_diagnostic        3     always_zero 0.867893 15.987179       0.867893          0.000000 0.500000            5       23
+exposed_diagnostic        3        logistic 0.040704  0.135793       0.867893          0.831913 0.428853            5       23
+exposed_diagnostic        3           prior 0.044635  0.158843       0.867893          0.801521 0.482451            5       23
+exposed_diagnostic        3 train_frequency 0.089627  0.271066       0.867893          0.733615 0.500000            5       23
+exposed_diagnostic        3  train_majority 0.128763  2.371894       0.867893          0.739130 0.500000            5       23
+exposed_diagnostic        7      always_one 0.094862  1.747416       0.905138          1.000000 0.500000            2       23
+exposed_diagnostic        7     always_zero 0.905138 16.673264       0.905138          0.000000 0.500000            2       23
+exposed_diagnostic        7        logistic 0.032174  0.103157       0.905138          0.881984 0.053075            2       23
+exposed_diagnostic        7           prior 0.036126  0.135028       0.905138          0.829920 0.433036            2       23
+exposed_diagnostic        7 train_frequency 0.065898  0.192022       0.905138          0.812040 0.500000            2       23
+exposed_diagnostic        7  train_majority 0.122530  2.257079       0.905138          0.782609 0.500000            2       23

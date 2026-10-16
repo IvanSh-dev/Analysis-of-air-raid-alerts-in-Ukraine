@@ -1,0 +1,16 @@
+             stage  horizon    model    brier  log_loss  observed_rate  mean_probability
+rolling_validation        1 logistic 0.075362  0.243597       0.791045          0.780290
+rolling_validation        1    prior 0.074905  0.253956       0.791045          0.758079
+rolling_validation        3 logistic 0.057914  0.173208       0.883842          0.887612
+rolling_validation        3    prior 0.057955  0.192063       0.883842          0.849651
+rolling_validation        7 logistic 0.047803  0.146575       0.937054          0.949766
+rolling_validation        7    prior 0.051990  0.176134       0.937054          0.898850
+Selected probability model: logistic
+Already-exposed latest-outcome diagnostic:
+             stage  horizon    model    brier  log_loss  observed_rate  mean_probability
+exposed_diagnostic        1 logistic 0.043745  0.146958       0.909938          0.874281
+exposed_diagnostic        1    prior 0.046268  0.169120       0.909938          0.853986
+exposed_diagnostic        3 logistic 0.028379  0.088454       0.951505          0.931062
+exposed_diagnostic        3    prior 0.029572  0.115745       0.951505          0.920250
+exposed_diagnostic        7 logistic 0.015916  0.054404       0.988142          0.960853
+exposed_diagnostic        7    prior 0.012562  0.072040       0.988142          0.959239

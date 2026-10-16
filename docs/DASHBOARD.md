@@ -20,3 +20,8 @@ The dashboard remains a fixed October 16 research example with 23 supported fore
 ## Historical hosting evidence
 
 The earlier owner-private Sites deployment is retained as a historical experiment, not the primary demo. [SITE_V3_DEPLOYMENT.json](SITE_V3_DEPLOYMENT.json) records its exact old URL/commit/deployment and must not be rewritten to pretend Vercel was published by that operation. Earlier access settings do not describe the current public Vercel deployment. The old deployment records and earlier screenshots are provenance; all current navigation uses Vercel and the supplied bot username.
+
+
+## Two-event revision — October 16, 2026
+
+The local revision adds `/threshold Київ 3` and event buttons alongside the existing `/forecast` event. The website has an explicit target selector; it updates probabilities, map, history, evaluation, AUC and the corresponding CSV. ≥3 includes exactly three on one local day, not the sum across days. The selected new-target method is smoothed frequency, chosen on validation. All counts still refer to all archive records. See [the experiment](THRESHOLD_PROBABILITY.md) and [integration verification](DUAL_TARGET_VERIFICATION.json). Both Vercel projects need the new commit; existing webhook registration remains valid. New-target live delivery is not yet verified.
