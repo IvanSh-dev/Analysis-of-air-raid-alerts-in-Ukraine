@@ -53,5 +53,18 @@
     "commit and push reviewed files",
     "wait for existing dashboard Vercel deployment",
     "refresh genuine conversation export after final assistant reply"
-  ]
+  ],
+  "readme_screenshot": {
+    "updated_at_utc": "2026-10-16T00:10:12.808106+00:00",
+    "file": "readable-home-2x.jpg",
+    "format": "JPEG",
+    "width": 2530,
+    "height": 1384,
+    "bytes": 182421,
+    "sha256": "9cfbccc2fecb421bd74e1fd04fd1cafca705002dfcd4f581353a400ab67d8ea8",
+    "method": "Fresh browser render from ignored local 2x capture view, explicit clip; not an upscale of the old image",
+    "visually_checked": true,
+    "public_deployment_proven": false,
+    "website_source_changed": false
+  }
 }

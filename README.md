@@ -6,7 +6,9 @@ A reproducible Python project for KSE AI Agentic School Stage 2. It forecasts th
 
 **Research only:** these are forecasts of records in an incomplete volunteer archive, not probabilities of official alerts, danger, or safety. Follow official air-raid notifications.
 
-![Local redesigned dashboard: guided regional forecast](docs/readable-home.jpg)
+![Local redesigned dashboard: guided regional forecast](docs/readable-home-2x.jpg)
+
+[Open the full-resolution screenshot](docs/readable-home-2x.jpg).
 
 ## What the demo shows
 
