@@ -48,3 +48,7 @@ Dry-run uses no token/network and sends nothing. Tests cover private command/cal
 The standard-library HTTPS implementation uses `getMe`, `getWebhookInfo`, `getUpdates`, `answerCallbackQuery` and `sendMessage`. It replies only to incoming private requests, without groups, broadcasts or automatic warnings. Only the last update offset is stored under ignored `.tmp/`; incoming chat text/IDs are not logged. Errors suppress token-bearing URLs. Exactly-once delivery after failures is not promised.
 
 Official references: [Bot tutorial](https://core.telegram.org/bots/tutorial), [getUpdates](https://core.telegram.org/bots/api#getupdates), [sendMessage](https://core.telegram.org/bots/api#sendmessage). No additional Python dependency is needed.
+
+## Current cloud delivery
+
+The bot now uses the separate Vercel webhook at https://air-alert-atlas-bot-lilac.vercel.app/api/telegram. The owner confirmed working delivery after registration and the requested no-console test workflow. This is owner-assisted verification; individual new cloud replies and buttons were not independently captured. The assistant verified endpoint readiness without a token. Do not start local polling unless the webhook has first been disabled; see [the hosting guide](VERCEL_BOT.md).

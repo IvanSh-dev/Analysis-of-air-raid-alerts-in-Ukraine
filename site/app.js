@@ -6,7 +6,7 @@ const date=d=>d.slice(8)+'.'+d.slice(5,7)+'.'+d.slice(0,4);
 let selected='Kyiv City',horizon=1,view='probability',metricMode='error',evaluationStage='validation';
 const current=r=>r.periods[String(horizon)];
 const scalar=p=>view==='probability'?p.probability:p.count;
-function pick(id){selected=id;renderList();renderDetail();renderMap();}
+function pick(id){selected=id;$('region-select').value=id;renderList();renderDetail();renderMap();}
 function update(){
  const end=data.regions[0].periods[String(horizon)].end;
  $('period-range').textContent=date(data.forecastDate)+(end===data.forecastDate?'':' — '+date(end));
@@ -33,6 +33,7 @@ function renderDetail(){
  $('region-name').textContent=r.name;$('availability').textContent=available?'Оцінка архівної події':'Немає даних';$('availability').className='badge'+(available?'':' missing');
  $('available-detail').hidden=!available;$('unavailable-detail').hidden=available;$('last-record').textContent=r.last?r.last.replace('+00:00',''):'немає';
  if(!available){$('unavailable-reason').textContent=r.reason;return;}
+ $('plain-result').textContent=`За оцінкою моделі, для регіону «${r.name}» шанс появи хоча б одного запису про початок тривоги в архіві за цей період становить ${pct(p.probability)}.`;
  $('forecast').textContent=pct(p.probability);$('baseline').textContent=pct(p.baselineProbability);
  $('count-forecast').textContent=fmt(p.count,1)+' записів';$('count-baseline').textContent=fmt(p.countBaseline,1)+' записів';
  $('region-mae').textContent=fmt(p.brier,4);$('chart-heading').textContent=view==='probability'?'Ймовірність і спостереження':'Кількість записів за вибране вікно';
@@ -61,14 +62,14 @@ function renderMap(){
  $('scale-min').textContent=view==='probability'?'0%':'0';$('scale-max').textContent=view==='probability'?'100%':fmt(max,1);
 }
 function drawChart(r,p){
- const rows=p.history,W=750,H=240,L=34,R=12,T=18,B=32;const prob=view==='probability';
+ const rows=p.history,W=750,H=240,L=52,R=12,T=18,B=36;const prob=view==='probability';
  const actual=d=>prob?d.actual:d.countActual,estimate=d=>prob?d.probability:d.count,baseline=d=>prob?d.baseline:d.countBaseline;
  const top=prob?1:Math.max(2,...rows.flatMap(d=>[actual(d),estimate(d),baseline(d)]));const max=prob?1:Math.ceil(top/4)*4;
  const x=i=>L+i*(W-L-R)/(rows.length-1),y=v=>T+(1-v/max)*(H-T-B),ns='http://www.w3.org/2000/svg';
  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('role','img');svg.setAttribute('aria-label',`${r.name}: ${prob?'ймовірності':'кількість'}, період ${horizon} днів, ${evaluationStage==='diagnostic'?'раніше переглянутий період':'часова валідація'}`);
  const add=(tag,attrs,text)=>{const n=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;svg.append(n);return n;};
- for(let i=0;i<=4;i++){const v=max*i/4;add('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:'#e9ede4','stroke-dasharray':'3 4'});add('text',{x:L-7,y:y(v)+4,'text-anchor':'end',fill:'#78816f','font-size':10},prob?Math.round(v*100)+'%':fmt(v,0));}
- for(const i of [0,7,14,rows.length-1])add('text',{x:x(i),y:H-10,'text-anchor':i===0?'start':i===rows.length-1?'end':'middle',fill:'#78816f','font-size':10},rows[i].date.slice(8)+'.'+rows[i].date.slice(5,7));
+ for(let i=0;i<=4;i++){const v=max*i/4;add('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:'#e9ede4','stroke-dasharray':'3 4'});add('text',{x:L-7,y:y(v)+4,'text-anchor':'end',fill:'#78816f','font-size':14},prob?Math.round(v*100)+'%':fmt(v,0));}
+ for(const i of [0,7,14,rows.length-1])add('text',{x:x(i),y:H-10,'text-anchor':i===0?'start':i===rows.length-1?'end':'middle',fill:'#78816f','font-size':14},rows[i].date.slice(8)+'.'+rows[i].date.slice(5,7));
  for(const [fn,color,dash]of [[baseline,'#bb794a','5 4'],[estimate,'#749d3c','none']])add('polyline',{points:rows.map((d,i)=>`${x(i)},${y(fn(d))}`).join(' '),fill:'none',stroke:color,'stroke-width':2,'stroke-dasharray':dash});
  if(!prob)add('polyline',{points:rows.map((d,i)=>`${x(i)},${y(actual(d))}`).join(' '),fill:'none',stroke:'#233932','stroke-width':2});
  rows.forEach((d,i)=>{const n=add('circle',{cx:x(i),cy:y(actual(d)),r:3.5,fill:'#233932',tabindex:0});const title=document.createElementNS(ns,'title');title.textContent=`${d.date}–${d.end}\nПодія: ${d.actual}\nЙмовірність: ${pct(d.probability)}\nЗаписів: ${d.countActual}\nПрогноз кількості: ${fmt(d.count,1)}`;n.append(title);});$('chart').replaceChildren(svg);
@@ -84,6 +85,10 @@ function renderMetrics(){
  const reliability=evaluationStage==='diagnostic'?data.diagnosticReliability:data.reliability;
  for(const bin of reliability.filter(r=>r.horizon===horizon)){const tr=document.createElement('tr');for(const value of [pct(bin.mean_probability),pct(bin.observed_frequency),String(bin.n)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}table.append(tr);}$('model-bars').append(table);}
 }
+// A native selector keeps the main task usable without exploring the map/list.
+for(const r of [...data.regions].sort((a,b)=>a.name.localeCompare(b.name,'uk'))){const option=document.createElement('option');option.value=r.id;option.textContent=r.name+(r.periods['1'].probability===null?' — немає даних':'');$('region-select').append(option);}
+$('region-select').value=selected;
+$('region-select').addEventListener('change',()=>pick($('region-select').value));
 document.querySelectorAll('[data-horizon]').forEach(b=>b.addEventListener('click',()=>{horizon=Number(b.dataset.horizon);update();}));
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;update();}));
 $('search').addEventListener('input',renderList);$('sort').addEventListener('change',renderList);

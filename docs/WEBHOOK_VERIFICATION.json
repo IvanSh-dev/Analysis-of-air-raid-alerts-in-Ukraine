@@ -1,8 +1,8 @@
 {
   "checked_at_utc": "2026-10-15T23:01:00.452528+00:00",
   "prepared_mode": "authenticated HTTPS webhook, separate Vercel project",
-  "live_deployed": false,
-  "live_webhook_registered": false,
+  "live_deployed": true,
+  "live_webhook_registered": true,
   "token_supplied_to_assistant": false,
   "real_telegram_api_calls": 0,
   "latest_python_tests_passed": 49,
@@ -19,14 +19,23 @@
   "generated_files": 12,
   "generated_uncompressed_bytes": 32713,
   "full_run_log_sha256": "d8378832d0048c783e1b3583aefe67e205657dd9a179dca0fd2feaea9a9a1e81",
-  "remaining_owner_steps": [
-    "push generated deployment",
-    "create separate Vercel project with root deploy/telegram",
-    "set private Production token and secret",
-    "deploy and run hidden-input registration",
-    "test commands and buttons after closing console"
-  ],
+  "remaining_owner_steps": [],
   "vercel_static_discovery_verified": true,
   "static_discovery_analyzer": "@vercel/python-analysis@0.15.0",
-  "discovery_fix_evidence": "VERCEL_DISCOVERY_FIX.json"
+  "discovery_fix_evidence": "VERCEL_DISCOVERY_FIX.json",
+  "deployment_verification": {
+    "recorded_at_utc": "2026-10-15T23:51:29.893777+00:00",
+    "endpoint": "https://air-alert-atlas-bot-lilac.vercel.app/api/telegram",
+    "assistant_http_status": 200,
+    "assistant_readiness_body": {
+      "ok": true,
+      "mode": "webhook"
+    },
+    "http_evidence": "Direct public GET in the preceding conversation turn",
+    "owner_delivery_report": "Все працює.",
+    "owner_report_context": "After registration instructions and requested tests with the console closed",
+    "live_registration_basis": "Owner-assisted; assistant did not possess a token or call setWebhook",
+    "individual_cloud_command_payloads_captured": false,
+    "continuous_uptime_proven": false
+  }
 }

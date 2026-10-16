@@ -9,11 +9,13 @@ The owner deployed the static dashboard to Vercel. On October 16, 2026, the publ
 
 `site/` contains the complete static website. `tools/build_dashboard.py` regenerates `data.js`, `data.json` and `forecasts.csv` from executed Python results; the bot reads the same JSON. There are no Node dependencies, runtime map tiles or live backend. Preserve the existing Vercel settings; deploy the contents of `site/`. Python model training and Telegram polling run separately.
 
-The current review updates the Telegram section and a chart accessibility label locally. These edits require a new Vercel deployment after Git push; the review does not claim to have deployed them. Map/probability data and model settings were unchanged.
+The latest local revision reorganizes the page around one task: choose a region and horizon, then read one forecast with a plain-language explanation. Technical metrics and history are collapsed by default. The native region selector, map and searchable directory share the same selection. Text is larger (18 px desktop, 17 px mobile), primary forecast controls have at least 48 px height, and narrow historical charts scroll horizontally. These edits require a new Vercel deployment after Git push; no deployment of this redesign is claimed. Map/probability data and model settings are unchanged.
 
 The modified local page was served over HTTP and checked in the browser: the Telegram button and corrected diagnostic label are present, with no console errors.
 
-The dashboard remains a fixed October 16 research example with 23 supported forecasts per period and four unavailable territories. It has no automatic refresh, danger probabilities or live warning service. Mobile layout was not rechecked in this final review.
+The dashboard remains a fixed October 16 research example with 23 supported forecasts per period and four unavailable territories. It has no automatic refresh, danger probabilities or live warning service. The redesign was inspected at the normal desktop viewport and a 390×844 mobile viewport; no page-wide horizontal overflow was observed, including with the research section open. The screenshot below is a local preview, not proof of a redeployed public page. See [redesign verification](READABILITY_REVIEW.json).
+
+![Local redesigned forecast screen](readable-forecast.jpg)
 
 ## Historical hosting evidence
 

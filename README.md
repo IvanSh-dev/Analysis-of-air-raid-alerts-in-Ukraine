@@ -6,15 +6,15 @@ A reproducible Python project for KSE AI Agentic School Stage 2. It forecasts th
 
 **Research only:** these are forecasts of records in an incomplete volunteer archive, not probabilities of official alerts, danger, or safety. Follow official air-raid notifications.
 
-![Regional probability map; unavailable territories are hatched](docs/site-map.jpg)
+![Local redesigned dashboard: guided regional forecast](docs/readable-home.jpg)
 
 ## What the demo shows
 
-- Regional forecasts, an interactive administrative map, search, and count/probability views.
+- A guided regional forecast: choose a territory and period, read one large percentage and its plain-language explanation, then explore the map. Historical graphs, model comparisons and technical metrics expand on demand. Body text is 18 px on desktop and 17 px on mobile.
 - One common forecast origin: **2026-10-16 00:00 Europe/Kyiv**. The 1/3/7-day windows end on October 16/18/22, respectively.
 - Coverage: **22 oblasts and Kyiv City**, or 23 supported territories in a 27-territory registry. Luhansk and Zakarpattia have stale histories; Crimea and Sevastopol are absent from the source. Their forecasts remain unavailable, never zero.
 - Baseline/model comparisons, regional metrics, reliability bins, historical graphs, and CSV download.
-- A registered Telegram bot using the same generated data. The original local polling mode needs a running Python process. A separate, optional Vercel webhook can reply without an open console; the existing dashboard deployment stays static.
+- A registered Telegram bot using the same generated data, now hosted through a separate Vercel webhook. The owner confirmed it works after the no-console setup. Local polling remains an alternative; do not run it while the webhook is registered.
 
 This is a **frozen research demonstration**, not an automatically updated service. A 7-day percentage means at least one archive record during the whole week, not an average daily probability. A new forecast origin requires fresh eligible snapshots and a new evaluation/prediction run.
 
@@ -121,7 +121,7 @@ The seven-day baseline is better there; the validation-selected family is unchan
 
 ## Telegram bot
 
-**To let people test it while your console/computer is off:** deploy the prepared dependency-free project in `deploy/telegram` as a second Vercel project, then register its webhook once. Follow [the complete no-console hosting guide](docs/VERCEL_BOT.md). This mode is prepared and offline-tested, but not yet cloud-deployed/registered by the assistant. Vercel Hobby has personal-use eligibility and usage limits; free does not mean unlimited or guaranteed uptime.
+**Current hosting:** the owner deployed `deploy/telegram` as a separate Vercel project and confirmed the bot works after registration. The assistant verified HTTP 200 and webhook readiness at [the public endpoint](https://air-alert-atlas-bot-lilac.vercel.app/api/telegram). Readiness alone does not prove Telegram delivery; the working-bot report is owner-assisted evidence. See [the no-console hosting guide](docs/VERCEL_BOT.md) for reproduction and rollback. Vercel Hobby has personal-use eligibility and usage limits; free does not mean unlimited or guaranteed uptime.
 
 Open **[@air_alert_atlas_bot](https://t.me/air_alert_atlas_bot)** and try `/start`, `/regions`, or:
 
@@ -155,6 +155,7 @@ Offline check, without token/network:
 | `tests/` | Temporal, missingness, selection, bot, UI checks |
 | `tools/` | Reproduction, optional raw rebuild, export, bot launcher |
 | `docs/` | Source audit, methods, coverage, experiment history, verification |
+| `reflection.txt` | Separate 100-word English reflection for the submission form |
 
 To reproduce probability outputs separately:
 
@@ -162,4 +163,4 @@ To reproduce probability outputs separately:
 ./.venv/Scripts/python.exe -m alerts_forecast.periods --output .tmp/probability-reproduction
 ```
 
-Submission requires the GitHub repository, an authentic full conversation text export, and a personally reviewed reflection of about 100 words. Local `submission/` materials are deliberately ignored by Git. Refresh the genuine export after the final assistant reply. The experiment log supplements it; it does not replace the conversation.
+Submission requires the GitHub repository, an authentic full conversation text export, and a personally reviewed reflection of about 100 words. The standalone English [reflection.txt](reflection.txt) is ready to attach as a separate plain-text file (100 words). Local `submission/` materials are deliberately ignored by Git. Refresh the genuine export after the final assistant reply. The experiment log supplements it; it does not replace the conversation.

@@ -52,12 +52,12 @@ Do not send either value in chat or commit it. If variables are added after depl
 
 ## 3. Verify configuration and connect Telegram once
 
-Open `https://YOUR-NEW-PROJECT.vercel.app/api/telegram` using the actual new production domain. This is a placeholder, not a created deployment. The endpoint should be publicly reachable and return `{"ok": true, "mode": "webhook"}`. A 503 means configuration is missing/invalid; a Vercel sign-in page means Telegram cannot reach it. GET readiness checks configuration only, not token validity or successful Telegram delivery. POST requests require the separate secret header.
+Open `https://air-alert-atlas-bot-lilac.vercel.app/api/telegram` for the owner-created production deployment. For another deployment, substitute its own production domain. The endpoint should be publicly reachable and return `{"ok": true, "mode": "webhook"}`. A 503 means configuration is missing/invalid; a Vercel sign-in page means Telegram cannot reach it. GET readiness checks configuration only, not token validity or successful Telegram delivery. POST requests require the separate secret header.
 
 Stop the old local polling bot with **Ctrl+C**. Do not run polling and webhook delivery together. From the main repository, run the following with the actual new URL:
 
 ```powershell
-./.venv/Scripts/python.exe -m alerts_forecast.webhook_setup --url https://YOUR-NEW-PROJECT.vercel.app/api/telegram
+./.venv/Scripts/python.exe -m alerts_forecast.webhook_setup --url https://air-alert-atlas-bot-lilac.vercel.app/api/telegram
 ```
 
 The script prompts for the existing bot token and webhook secret using hidden input (or reads the corresponding environment variables). Nothing is stored in files or command arguments. It checks deployed readiness, verifies the bot identity, and authenticates a message-free probe with the secret before changing Telegram routing. It then registers the URL/secret via `setWebhook` and verifies the registered URL. Pending updates are kept. This changes delivery for the existing bot; it does not create a new bot or username.
@@ -95,7 +95,7 @@ Official detector references: [Python entrypoint detection](https://github.com/v
 
 Offline tests exercise secret-header rejection, malformed/oversized bodies, command/callback routing, retryable upstream failures and all 81 forecast responses. A separate Python process with site-packages disabled imports the deployment successfully, proving that pandas/sklearn are not required. These tests use fake Telegram transport and do not send real messages.
 
-The webhook was **prepared and tested locally, not deployed or registered by the assistant**. No token was provided to the assistant. The earlier owner-assisted live replies prove the previous local bot worked; they do not prove this new cloud delivery mode works.
+The owner deployed the webhook and completed hidden-input registration, then reported “Все працює” after the requested no-console test workflow. The assistant independently verified HTTP 200 and the readiness JSON at the production endpoint; it did not receive a token or operate a live Telegram session. This separates endpoint verification from owner-assisted delivery evidence. It does not establish continuous uptime or independently capture every command/button result.
 
 The function waits for its Telegram calls before returning. It uses short timeouts and returns failure on transient errors so Telegram can retry. There is no durable deduplication store, so retries after partial failures can produce duplicate replies. Cold starts and free-tier limits can delay/unavailable replies; no 24/7 guarantee is claimed. Forecasts remain frozen and are not official alerts.
 

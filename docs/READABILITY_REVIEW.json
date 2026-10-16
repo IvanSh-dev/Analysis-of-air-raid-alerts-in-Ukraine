@@ -1,0 +1,57 @@
+{
+  "recorded_at_utc": "2026-10-15T23:55:14.610790+00:00",
+  "scope": "Presentation and navigation only; no model, forecast or data changes",
+  "status": "Local files ready; redesign not committed, pushed or deployed by assistant",
+  "python_tests_passed": 49,
+  "javascript_region_horizon_states_passed": 81,
+  "new_region_selector_sync_checked": true,
+  "native_details_default_closed": true,
+  "browser_checks": {
+    "desktop_viewport": [
+      1280,
+      900
+    ],
+    "desktop_page_width": 1265,
+    "desktop_body_font_px": 18,
+    "mobile_viewport": [
+      390,
+      844
+    ],
+    "mobile_page_width": 375,
+    "mobile_body_font_px": 17,
+    "region_selector_font_px": 18,
+    "no_page_wide_horizontal_overflow": true,
+    "historical_chart_mobile_scroll_width_px": 750,
+    "historical_chart_mobile_container_px": 292,
+    "checked": [
+      "region selector and 3-day result",
+      "missing territory hides numeric forecast",
+      "map selection synchronizes selector",
+      "baseline and history disclosures",
+      "research disclosure and diagnostic calibration",
+      "CSV downloaded and bytes match forecast export"
+    ],
+    "console_errors_observed": 0,
+    "screenshot_scope": "Local HTTP preview, not public redeployment"
+  },
+  "reflection": {
+    "file": "../reflection.txt",
+    "words": 100,
+    "language": "English",
+    "encoding": "UTF-8",
+    "plain_text": true,
+    "revised_after_owner_feedback": true,
+    "structure": "Three paragraphs: what went wrong; how I adjusted; why the final version is better"
+  },
+  "bot_followup": "Owner reported working cloud bot; see WEBHOOK_VERIFICATION.json",
+  "changed_assets_sha256": {
+    "site/index.html": "1854a6a76adbd21c63c7137502134e9e0bdbdefc6cc4e20e6faef5b921196c07",
+    "site/style.css": "6777303d95c61f2ea068a7940897d422810af7c561ac1c208bd1b1fce28ecc18",
+    "site/app.js": "6df0a648a9c817d1af2d8fc305aecf4079527e1364559ec6a2caf5f5cb500fac"
+  },
+  "remaining_steps": [
+    "commit and push reviewed files",
+    "wait for existing dashboard Vercel deployment",
+    "refresh genuine conversation export after final assistant reply"
+  ]
+}

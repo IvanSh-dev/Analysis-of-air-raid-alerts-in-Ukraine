@@ -10,7 +10,12 @@
   "python_tests_passed": 49,
   "entrypoint_sha256": "ab50cc8b0b2d4ab4a734766c39c6c055f8d44ffa7c73dffc65393b31449d6ef6",
   "official_detector_source": "https://github.com/vercel/vercel/blob/main/packages/fs-detectors/src/python.ts",
-  "cloud_redeployment_verified": false,
+  "cloud_redeployment_verified": true,
   "token_or_secret_changed": false,
-  "model_or_forecast_changed": false
+  "model_or_forecast_changed": false,
+  "cloud_followup": {
+    "recorded_at_utc": "2026-10-15T23:51:29.893777+00:00",
+    "endpoint": "https://air-alert-atlas-bot-lilac.vercel.app/api/telegram",
+    "evidence": "Successful owner deployment screenshot, assistant HTTP 200 readiness check, then owner reported working bot"
+  }
 }
