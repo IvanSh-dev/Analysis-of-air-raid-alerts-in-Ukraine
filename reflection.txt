@@ -1,5 +1,0 @@
-The initial approach did not match my goal of covering Ukraine. The archives counted alert events differently, the first model performed worse than a simple baseline, and the bot stopped when I closed its console.
-
-I changed my approach by challenging AI suggestions and asking for evidence before accepting decisions. We checked source compatibility, kept missing values explicit, compared models chronologically, and moved the bot to a webhook.
-
-The final version is better because it uses a consistent target, covers 23 territories with exclusions, and provides reproducible results through a simpler website and a bot that works without my computer.

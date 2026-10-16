@@ -129,5 +129,3 @@ Optional provenance rebuild (184 downloads, about 1.5 GB uncompressed; unnecessa
 ```
 
 Every raw snapshot is checked against its pinned SHA-256. Future data updates are new experiments: retain this frozen reference and define a new future holdout before observing it. Recheck data freshness if submitting after another daily archive release.
-
-KSE requires three separate items: working GitHub code, authentic full conversation export and an approximately 100-word reflection. The experiment log does not replace the chat export. Refresh the real export after the final response and personally review the reflection.

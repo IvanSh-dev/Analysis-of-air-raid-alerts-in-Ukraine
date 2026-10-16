@@ -34,15 +34,6 @@
     "console_errors_observed": 0,
     "screenshot_scope": "Local HTTP preview, not public redeployment"
   },
-  "reflection": {
-    "file": "../reflection.txt",
-    "words": 100,
-    "language": "English",
-    "encoding": "UTF-8",
-    "plain_text": true,
-    "revised_after_owner_feedback": true,
-    "structure": "Three paragraphs: what went wrong; how I adjusted; why the final version is better"
-  },
   "bot_followup": "Owner reported working cloud bot; see WEBHOOK_VERIFICATION.json",
   "changed_assets_sha256": {
     "site/index.html": "1854a6a76adbd21c63c7137502134e9e0bdbdefc6cc4e20e6faef5b921196c07",
@@ -51,8 +42,7 @@
   },
   "remaining_steps": [
     "commit and push reviewed files",
-    "wait for existing dashboard Vercel deployment",
-    "refresh genuine conversation export after final assistant reply"
+    "wait for existing dashboard Vercel deployment"
   ],
   "readme_screenshot": {
     "updated_at_utc": "2026-10-16T00:10:12.808106+00:00",

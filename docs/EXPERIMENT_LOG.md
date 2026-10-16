@@ -54,9 +54,9 @@ Chronological record. Earlier proposals and unfinished statuses below describe t
 - Found 22 region-day counts revised after the target's fixed maturity snapshot. Historical features/labels were not replaced with revised latest values.
 - Eight initial temporal/missingness/metric tests passed. Added three meaningful guard tests: test metrics rejected by model selection, fixed target vintages unaffected by future changes, and immature labels unavailable. This changed validation checks, not model settings or selection.
 - The user attached the destination Git repository. Read its existing README/license and preserved its MIT license and existing ignore rules. An initial copy used the destination as the relative source directory and failed without changing project code; corrected the source to an absolute path and continued.
-- The user's reflection emphasizes checking whether AI decisions match the original nationwide objective and verifying source compatibility and historical information availability. Reflection wording uses only executed changes and observed results.
+- The user emphasized checking whether AI decisions match the original nationwide objective and verifying source compatibility and historical information availability.
 
-See EXECUTION.md for the final clean-environment run and repeatability checks. The authentic conversation export is a separate submission artifact; this log is not a substitute for it.
+See EXECUTION.md for the final clean-environment run and repeatability checks.
 
 ## Final execution check
 
@@ -69,7 +69,7 @@ See EXECUTION.md for the final clean-environment run and repeatability checks. T
 - Diagnostic MAE decreased from 2.048580 to 2.001508 but bias became more negative. Reported the tradeoff and lack of new independent confirmation.
 - Created a Ukrainian responsive dashboard, exported actual outputs, and preserved all 27 territorial statuses. Browser checks covered search, unavailable states, sorting, selected-region chart, comparison tabs and CSV download; the download hash matched the source. No browser console errors were observed. Narrow layout had no horizontal overflow.
 - Full updated README runner passed 15 tests and completed both experiments plus dashboard export. Repeated improved results were byte-identical. No model choices changed during repeatability checks.
-- Read and rewrote README; archived original description and corrected relative links. Refreshed reflection and submission instructions to distinguish the two experiments.
+- Read and rewrote README; archived original description and corrected relative links.
 - Site registration succeeded once. Initial local server was isolated by sandbox; approved host execution exposed it correctly. Sites packaging first lacked Git Bash in PATH, then MSYS could not initialize within the sandbox, then tar treated a Windows drive as a remote host. Resolved with approved execution, Git Bash PATH and --force-local. Renewed the expired short-lived credential for the same Site; no credential persisted. Native deployment reported success, owner-private. Production URL displays its expected ChatGPT sign-in gate; UI was tested locally.
 
 ## Third iteration — explicit probabilities, periods, map and bot
@@ -112,6 +112,6 @@ The owner reported `[unused_function]` for `api/telegram.py` during deployment. 
 
 ## Readability revision and owner-confirmed cloud bot — October 16, 2026
 
-The owner confirmed the Vercel bot works after the no-console registration workflow. Endpoint readiness was independently verified in the preceding conversation turn; no assistant Telegram session or credential sharing occurred. This supersedes earlier pending-deployment status entries. The website was then simplified for first-time visitors: a clear introduction, one region/period selector, a large result and plain-language interpretation, followed by the map. History, baselines and technical evaluation expand on demand. Larger typography, native controls and mobile spacing replace the dense dashboard layout. Numerical forecasts and model settings are unchanged. The separate root reflection.txt contains the existing personally grounded 100-word English reflection. See READABILITY_REVIEW.json for checks and deployment status.
+The owner confirmed the Vercel bot works after the no-console registration workflow. Endpoint readiness was independently verified in the preceding conversation turn; no assistant Telegram session or credential sharing occurred. This supersedes earlier pending-deployment status entries. The website was then simplified for first-time visitors: a clear introduction, one region/period selector, a large result and plain-language interpretation, followed by the map. History, baselines and technical evaluation expand on demand. Larger typography, native controls and mobile spacing replace the dense dashboard layout. Numerical forecasts and model settings are unchanged. See READABILITY_REVIEW.json for checks and deployment status.
 
 The final diff review caught Windows default-decoding corruption in four documentation appends. Restored their original UTF-8 history from HEAD and retained only the intended new entries; explicit UTF-8 reads/writes preserve Ukrainian command examples.

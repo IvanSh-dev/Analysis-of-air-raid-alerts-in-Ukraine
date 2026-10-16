@@ -114,5 +114,3 @@ Optional raw provenance rebuild (large download, about 1.5 GB uncompressed acros
 ```
 
 Every raw snapshot is checked against its recorded SHA-256 before use. This rebuild was executed to create the compact dataset; ordinary reproduction does not require it. Future data updates are a new experiment: retain this frozen evaluation, define a new holdout, and avoid tuning on the test already reported here.
-
-This repository is the code artifact. The authentic conversation export and approximately 100-word personal reflection are separate submission items. The conversation must be exported from the actual tool history, not reconstructed from the experiment log.

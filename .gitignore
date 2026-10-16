@@ -222,5 +222,6 @@ __marimo__/
 .tmp/
 .vintage_cache/
 
-# Private submission materials (conversation export and reflection)
+# Private local materials
 /submission/
+/reflection.txt

@@ -28,7 +28,7 @@ The changed local page was also served over HTTP and checked in the browser: the
 - Corrected the bot's map URL to Vercel and removed its private-site suffix.
 - Replaced the website's obsolete “bot not registered” message with the real Telegram link and an honest process-availability note.
 - Corrected the chart's accessibility label when viewing the exposed diagnostic period; added regression checks for the label and public navigation.
-- Updated current hosting/bot documentation and prepared the English plain-text reflection. Historical execution/deployment evidence was retained as history rather than rewritten.
+- Updated current hosting/bot documentation without including personal submission materials. Historical execution/deployment evidence was retained as history rather than rewritten.
 
 ## Required after this review
 
@@ -39,8 +39,6 @@ The owner-supplied replies already contain the public map link, so that running 
 The owner performed `/forecast Київ 3` and `/forecast Закарпатська 1` and pasted both live replies. Kyiv showed 99.7%, 14.7 records and October 16–18; Zakarpattia was unavailable rather than 0%. Full text matched the local renderer after whitespace normalization. See [TELEGRAM_MANUAL_CHECK.json](TELEGRAM_MANUAL_CHECK.json). Callback buttons and continuous uptime were not established by these two replies.
 
 The latest mature target is October 13. Coverage remains 23/27 registry territories, with an archive-record proxy and assumed publication delay. The original test was already exposed, so there is no fresh independent test. These limitations are not repaired by hosting or better UI.
-
-Refresh the authentic chat export after the final reply. The separate local `submission/` directory stays ignored by Git.
 
 ## No-console bot hosting — webhook prepared, not cloud-deployed
 
@@ -54,4 +52,4 @@ The owner reported `[unused_function]` for `api/telegram.py` during deployment. 
 
 ## Readability revision and owner-confirmed cloud bot — October 16, 2026
 
-The owner confirmed the Vercel bot works after the no-console registration workflow. Endpoint readiness was independently verified in the preceding conversation turn; no assistant Telegram session or credential sharing occurred. This supersedes earlier pending-deployment status entries. The website was then simplified for first-time visitors: a clear introduction, one region/period selector, a large result and plain-language interpretation, followed by the map. History, baselines and technical evaluation expand on demand. Larger typography, native controls and mobile spacing replace the dense dashboard layout. Numerical forecasts and model settings are unchanged. The separate root reflection.txt contains the existing personally grounded 100-word English reflection. See READABILITY_REVIEW.json for checks and deployment status.
+The owner confirmed the Vercel bot works after the no-console registration workflow. Endpoint readiness was independently verified in the preceding conversation turn; no assistant Telegram session or credential sharing occurred. This supersedes earlier pending-deployment status entries. The website was then simplified for first-time visitors: a clear introduction, one region/period selector, a large result and plain-language interpretation, followed by the map. History, baselines and technical evaluation expand on demand. Larger typography, native controls and mobile spacing replace the dense dashboard layout. Numerical forecasts and model settings are unchanged. See READABILITY_REVIEW.json for checks and deployment status.
